@@ -14,3 +14,7 @@ hs_err_pid*
 build
 .gradle
 *~
+
+wsdl2Java.iws
+wsdl2Java.ipr
+wsdl2Java.iml
