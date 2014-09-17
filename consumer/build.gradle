@@ -1,0 +1,22 @@
+buildscript{
+	repositories{
+		maven {
+            url uri('../repo')
+        }
+        mavenCentral()
+	}
+	dependencies {
+		classpath 'no.nils:wsdl2Java:+'
+	}
+}
+
+apply plugin :'java'
+apply plugin :'wsdl2java'
+
+repositories{
+	mavenCentral()
+}
+
+wsdl2java{
+	cxfVersion = "2.7.6"
+}
