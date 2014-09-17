@@ -1,0 +1,14 @@
+apply plugin: 'groovy'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+    testCompile 'junit:junit:4.11'
+}
+
+group = 'no.nils'
+version = '0.1-SNAPSHOT'
