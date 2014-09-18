@@ -33,16 +33,20 @@ To use this plugin, you must
     }
     apply plugin: 'wsdl2java'
 
-### Properties
+### Options
 There are two properties that you can set
 - generatedWsdlDir : this is where you want the generated sources to be placed. Default value is "generated-sources/src/main/java".
 - wsdlsToGenerate : this is the main input to the plugin that defines the wsdls to process. It is a list of arguments where each argument is a list of arguments to process a wsdl-file. The Wsdl-file with full path is the last argument. The array can be supplied with the same options as described for the maven-cxf plugin(http://cxf.apache.org/docs/wsdl-to-java.html). 
 
-    String generatedWsdlDir  // target directory for generated source coude
-    def wsdlsToGenerate = [   //  2d-array of wsdls and cxf-parameters
-                ['src/main/resources/wsdl/firstwsdl.wsdl'],
-                ['-xcj','-b','bingingfile.xml','src/main/resources/wsdl/secodwsdl.wsdl']
+Example setting of options:
+
+    wsdl2java{
+        String generatedWsdlDir  // target directory for generated source coude
+        def wsdlsToGenerate = [   //  2d-array of wsdls and cxf-parameters
+                    ['src/main/resources/wsdl/firstwsdl.wsdl'],
+                    ['-xcj','-b','bingingfile.xml','src/main/resources/wsdl/secodwsdl.wsdl']
             ]
+    }
 
 ### Add generated sources to sourceset
 
