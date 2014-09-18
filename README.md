@@ -1,22 +1,18 @@
 wsdl2java
 =========
 
-Gradle plugin for generating java from wsdl/xsd
+Gradle plugin for generating java from wsdl/xsd, using cxf under the hood and the same options as the maven wsdl-2-java plugin from apache-cxf.
 
-# About
-## Author
-Nils Larsgård. 
-
-## Issues
+### Issues
 If you have any issues with the plugin, please file an issue at github, https://github.com/nilsmagnus/wsdl2java/issues
 
-## Contribution
+### Contribution
 Contributions are welcome as long as they are sane. 
 
-## CXF
-This library uses the apache-cxf tools to do the actual work. 
+### CXF
+This plugin uses the apache-cxf tools to do the actual work. 
 
-# Usage
+## Usage
 
 To use this plugin, you must
 - modify your buildscript to have dependencies to the plugin
@@ -24,7 +20,7 @@ To use this plugin, you must
 - set the properties of the plugin
 - add the generated sources to your sourceset
 
-## Applying the plugin
+### Applying the plugin
 
     buildscript{
         repositories{
@@ -37,7 +33,7 @@ To use this plugin, you must
     }
     apply plugin: 'wsdl2java'
 
-## Properties
+### Properties
 There are two properties that you can set
 - generatedWsdlDir : this is where you want the generated sources to be placed. Default value is "generated-sources/src/main/java".
 - wsdlsToGenerate : this is the main input to the plugin that defines the wsdls to process. It is a list of arguments where each argument is a list of arguments to process a wsdl-file. The Wsdl-file with full path is the last argument. The array can be supplied with the same options as described for the maven-cxf plugin(http://cxf.apache.org/docs/wsdl-to-java.html). 
@@ -48,13 +44,13 @@ There are two properties that you can set
                 ['-xcj','-b','bingingfile.xml','src/main/resources/wsdl/secodwsdl.wsdl']
             ]
 
-## Add generated sources to sourceset
+### Add generated sources to sourceset
 
     sourceSets{
         main.java.srcDirs +=[wsdl2java.generatedWsdlDir]
     }
 
-# Complete example usage
+## Complete example usage
 This is a an example of a working build.gradle for a java project. You can also take a look at this projects submodule "consumer" which has a working wsdl compiling.
 
     buildscript{
