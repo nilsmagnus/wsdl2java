@@ -57,7 +57,7 @@ build.doLast{
 
 bintray {
     apiUrl = "https://api.bintray.com"
-    user = System.env.BINRAY_USER
+    user = System.env.BINTRAY_USER
     key = System.env.BINTRAY_API_KEY
 
     //publications = ['mavenStuff'] //When uploading Maven-based publication files
