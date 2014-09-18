@@ -19,13 +19,17 @@ repositories {
     mavenCentral()
 }
 
+project.ext{
+    cxfVersion = "+"
+}
+
 dependencies {
     compile gradleApi()
     compile localGroovy()
 
-    compile "org.apache.cxf:cxf-tools:+",
-            "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:+",
-            "org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:+"
+    compile "org.apache.cxf:cxf-tools:$cxfVersion",
+            "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:$cxfVersion",
+            "org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:$cxfVersion"
 
     testCompile 'junit:junit:4.11'
 }
@@ -73,12 +77,12 @@ bintray {
         repo = 'maven'
         //userOrg = 'no.nils' //An optional organization name when the repo belongs to one of the user's orgs
         name = 'wsdl2java'
-        desc = 'what a fantastic package indeed!'
-        websiteUrl = 'https://github.com/bintray/gradle-bintray-plugin'
-        issueTrackerUrl = 'https://github.com/bintray/gradle-bintray-plugin/issues'
-        vcsUrl = 'https://github.com/bintray/gradle-bintray-plugin.git'
+        desc = 'Gradle wsdl2java plugin'
+        websiteUrl = 'https://github.com/nilsmagnus/wsdl2java'
+        issueTrackerUrl = 'https://github.com/nilsmagnus/wsdl2java/issues'
+        vcsUrl = 'https://github.com/nilsmagnus/wsdl2java.git'
         licenses = ['MIT']
-        labels = ['gear', 'gore', 'gorilla']
+        labels = ['gradle', 'wsdl2java', 'plugin']
         publicDownloadNumbers = true
         attributes= ['a': ['ay1', 'ay2'], 'b': ['bee'], c: 'cee'] //Optional package-level attributes
         //Optional version descriptor
