@@ -1,6 +1,19 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.5'
+    }
+}
+
 apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'idea'
+apply plugin: 'com.jfrog.bintray'
+
+
+targetCompatibility=1.6
 
 repositories {
     mavenCentral()
@@ -18,12 +31,67 @@ dependencies {
 }
 
 group = 'no.nils'
-version = '0.1-SNAPSHOT'
+version = '0.1'
 
 uploadArchives {
     repositories {
         mavenDeployer {
             repository(url: uri('../repo'))
+        }
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+build.doLast{
+    uploadArchives
+}
+
+
+bintray {
+    apiUrl = "https://api.bintray.com"
+    user = System.env.BINRAY_USER
+    key = System.env.BINTRAY_API_KEY
+
+    //publications = ['mavenStuff'] //When uploading Maven-based publication files
+    // - AND/OR -
+    filesSpec { //When uploading any arbitrary files ('filesSpec' is a standard Gradle CopySpec)
+        from 'build/libs/*jar'
+        into 'standalone_files/level1'
+        rename '(.+)\\.(.+)', '$1-suffix.$2'
+    }
+    dryRun = false //Whether to run this as dry-run, without deploying
+    publish = true //If version should be auto published after an upload
+    pkg {
+        repo = 'maven'
+        //userOrg = 'no.nils' //An optional organization name when the repo belongs to one of the user's orgs
+        name = 'wsdl2java'
+        desc = 'what a fantastic package indeed!'
+        websiteUrl = 'https://github.com/bintray/gradle-bintray-plugin'
+        issueTrackerUrl = 'https://github.com/bintray/gradle-bintray-plugin/issues'
+        vcsUrl = 'https://github.com/bintray/gradle-bintray-plugin.git'
+        licenses = ['MIT']
+        labels = ['gear', 'gore', 'gorilla']
+        publicDownloadNumbers = true
+        attributes= ['a': ['ay1', 'ay2'], 'b': ['bee'], c: 'cee'] //Optional package-level attributes
+        //Optional version descriptor
+        version {
+            name = '0.1' //Bintray logical version name
+            desc = ''
+            //released  = '' //2 possible values: date in the format of 'yyyy-MM-dd'T'HH:mm:ss.SSSZZ' OR a java.util.Date instance
+            vcsTag = '0.1'
+            attributes = ['gradle-plugin': 'no.nils:no.nils.gradle:no-nils-wsdl2java'] //Optional version-level attributes
+            /*gpg {
+                sign = false //Determines whether to GPG sign the files. The default is false
+                passphrase = 'optional, the passphrase for GPG signing'
+            } */
         }
     }
 }

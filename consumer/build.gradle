@@ -11,12 +11,25 @@ buildscript{
 }
 
 apply plugin :'java'
+apply plugin :'idea'
 apply plugin :'wsdl2java'
 
 repositories{
 	mavenCentral()
 }
 
-wsdl2java{
-	cxfVersion = "2.7.6"
+dependencies(){
+    testCompile 'junit:junit:+'
 }
+
+wsdl2java{
+    wsdlsToGenerate = [
+            ['src/main/resources/wsdl/stockqoute.wsdl']
+    ]
+    generatedWsdlDir = "generatedsources"
+}
+
+sourceSets{
+    main.java.srcDirs +=[wsdl2java.generatedWsdlDir]
+}
+
