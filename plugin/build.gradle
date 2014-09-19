@@ -20,7 +20,8 @@ repositories {
 }
 
 project.ext{
-    cxfVersion = "+"
+
+    cxfVersion = System.env.CXF_VERSION ? System.env.CXF_VERSION : '+'
 }
 
 dependencies {
@@ -35,7 +36,7 @@ dependencies {
 }
 
 group = 'no.nils'
-version = '0.1'
+version = System.env.CXF_VERSION ?'0.2-cxf-'+System.env.CXF_VERSION + '-SNAPSHOT': '0.2-SNAPSHOT'
 
 uploadArchives {
     repositories {
