@@ -35,6 +35,25 @@ To use this plugin, you must
         }
     }
     apply plugin: 'wsdl2java'
+    
+    
+#### Specific CXF version
+If you want to use a specific version of cxf instead of the latest, you could override the plugins dependencies by changing the buildscript block to this, where you replace cxfVersion with your version of cxf:
+
+    buildscript{
+        repositories{
+            jcenter()
+            mavenCentral()
+        }
+        dependencies {
+            classpath 'no.nils:wsdl2Java:+'
+            compile ("org.apache.cxf:cxf-tools:$cxfVersion"){ force = true }
+            compile ("org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:$cxfVersion") { force = true }
+            compile ("org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:$cxfVersion" ) { force = true }
+        }
+    }
+    apply plugin: 'wsdl2java'
+    
 
 ### Options
 There are two properties that you can set
@@ -56,6 +75,8 @@ Example setting of options:
     sourceSets{
         main.java.srcDirs +=[wsdl2java.generatedWsdlDir]
     }
+    
+    
 
 ## Complete example usage
 This is a an example of a working build.gradle for a java project. You can also take a look at this projects submodule "consumer" which has a working wsdl compiling.

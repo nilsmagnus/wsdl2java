@@ -9,19 +9,19 @@ buildscript {
 
 apply plugin: 'groovy'
 apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'idea'
 apply plugin: 'com.jfrog.bintray'
 
-
-targetCompatibility=1.6
+// stay compatible with the crowd
+targetCompatibility = 1.6
 
 repositories {
     mavenCentral()
 }
 
-project.ext{
-
-    cxfVersion = System.env.CXF_VERSION ? System.env.CXF_VERSION : '+'
+project.ext {
+    cxfVersion = '+' // always the latest version from nexus
 }
 
 dependencies {
@@ -36,7 +36,7 @@ dependencies {
 }
 
 group = 'no.nils'
-version = System.env.CXF_VERSION ?'0.2-cxf-'+System.env.CXF_VERSION + '-SNAPSHOT': '0.2-SNAPSHOT'
+version = '0.2'
 
 uploadArchives {
     repositories {
@@ -45,6 +45,8 @@ uploadArchives {
         }
     }
 }
+
+build.doLast { uploadArchives }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
@@ -55,8 +57,17 @@ artifacts {
     archives sourcesJar
 }
 
-build.doLast{
-    uploadArchives
+publishing {
+    publications {
+        mavenStuff(MavenPublication) {
+
+            from components.java
+
+            artifact sourcesJar {
+                classifier 'sources'
+            }
+        }
+    }
 }
 
 
@@ -65,13 +76,8 @@ bintray {
     user = System.env.BINTRAY_USER
     key = System.env.BINTRAY_API_KEY
 
-    //publications = ['mavenStuff'] //When uploading Maven-based publication files
+    publications = ['mavenStuff'] //When uploading Maven-based publication files
     // - AND/OR -
-    filesSpec { //When uploading any arbitrary files ('filesSpec' is a standard Gradle CopySpec)
-        from 'build/libs/*jar'
-        into 'standalone_files/level1'
-        rename '(.+)\\.(.+)', '$1-suffix.$2'
-    }
     dryRun = false //Whether to run this as dry-run, without deploying
     publish = true //If version should be auto published after an upload
     pkg {
@@ -85,14 +91,15 @@ bintray {
         licenses = ['MIT']
         labels = ['gradle', 'wsdl2java', 'plugin']
         publicDownloadNumbers = true
-        attributes= ['a': ['ay1', 'ay2'], 'b': ['bee'], c: 'cee'] //Optional package-level attributes
+        attributes = ['a': ['ay1', 'ay2'], 'b': ['bee'], c: 'cee'] //Optional package-level attributes
         //Optional version descriptor
         version {
-            name = '0.1' //Bintray logical version name
+            name = project.version //Bintray logical version name
             desc = ''
             //released  = '' //2 possible values: date in the format of 'yyyy-MM-dd'T'HH:mm:ss.SSSZZ' OR a java.util.Date instance
-            vcsTag = '0.1'
-            attributes = ['gradle-plugin': 'no.nils:no.nils.gradle:no-nils-wsdl2java'] //Optional version-level attributes
+            vcsTag = project.version
+            attributes = ['gradle-plugin': 'no.nils.wsdl2java:no.nils:wsdl2java']
+            //Optional version-level attributes
             /*gpg {
                 sign = false //Determines whether to GPG sign the files. The default is false
                 passphrase = 'optional, the passphrase for GPG signing'
