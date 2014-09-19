@@ -1,4 +1,4 @@
-wsdl2java
+wsdl2java gradle plugin
 =========
 
 Gradle plugin for generating java from wsdl/xsd, using cxf under the hood and the same options as the maven wsdl-2-java plugin from apache-cxf.
