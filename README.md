@@ -34,7 +34,7 @@ To use this plugin, you must
             classpath 'no.nils:wsdl2Java:+'
         }
     }
-    apply plugin: 'wsdl2java'
+    apply plugin: 'no.nils.wsdl2java'
     
     
 #### Specific CXF version
@@ -92,7 +92,7 @@ This is a an example of a working build.gradle for a java project. You can also 
     }
 
     apply plugin :'java'
-    apply plugin :'wsdl2java'
+    apply plugin :'no.nils.wsdl2java'
 
     repositories{
         mavenCentral()
