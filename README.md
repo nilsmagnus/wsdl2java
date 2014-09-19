@@ -47,9 +47,9 @@ If you want to use a specific version of cxf instead of the latest, you could ov
         }
         dependencies {
             classpath 'no.nils:wsdl2Java:+'
-            compile ("org.apache.cxf:cxf-tools:$cxfVersion"){ force = true }
-            compile ("org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:$cxfVersion") { force = true }
-            compile ("org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:$cxfVersion" ) { force = true }
+            classpath ("org.apache.cxf:cxf-tools:$cxfVersion"){ force = true }
+            classpath ("org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:$cxfVersion") { force = true }
+            classpath ("org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:$cxfVersion" ) { force = true }
         }
     }
     apply plugin: 'wsdl2java'
