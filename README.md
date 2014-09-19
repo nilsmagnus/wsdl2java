@@ -3,6 +3,9 @@ wsdl2java
 
 Gradle plugin for generating java from wsdl/xsd, using cxf under the hood and the same options as the maven wsdl-2-java plugin from apache-cxf.
 
+The plugin binaries are downloadable from bintray: https://bintray.com/nilsmagnus/maven/wsdl2java-gradle-plugin/
+
+
 ### Issues
 If you have any issues with the plugin, please file an issue at github, https://github.com/nilsmagnus/wsdl2java/issues
 
