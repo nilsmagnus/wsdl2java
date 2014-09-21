@@ -10,7 +10,6 @@ buildscript{
 	}
 }
 
-apply plugin :'java'
 apply plugin :'idea'
 apply plugin :'no.nils.wsdl2java'
 
@@ -27,6 +26,7 @@ wsdl2java{
             ['src/main/resources/wsdl/stockqoute.wsdl']
     ]
     generatedWsdlDir = "generatedsources"
+    cxfVersion = "2.5.1"
 }
 
 sourceSets{

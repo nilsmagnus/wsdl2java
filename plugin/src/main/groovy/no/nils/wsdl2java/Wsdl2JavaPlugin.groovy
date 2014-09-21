@@ -1,18 +1,25 @@
-package org.gradle
-
-import org.gradle.api.Project
+package no.nils
 import org.gradle.api.Plugin
+import org.gradle.api.Project
 
 class Wsdl2JavaPlugin implements Plugin<Project> {
-    void apply(Project target) {
-        target.task('wsdl2java', type: Wsdl2JavaTask)
-        target.compileJava.dependsOn target.wsdl2java
-        target.sourceSets.main.java.srcDirs += target.wsdl2java.generatedWsdlDir
-        // TODO this does not work. The intention was to let the user decide the version of cxf, but is not currently working.
-        //target.afterEvaluate {
-        //	target.dependencies.add("compile", "org.apache.cxf:cxf-tools:$target.wsdl2java.cxfVersion")
-        //}
-    }
+    static final String WSDL2JAVA = "wsdl2java"
 
-   
+    void apply(Project project) {
+        // make sure the project has the java plugin
+        project.apply(plugin: 'java')
+
+        // add task and a description
+        project.task(WSDL2JAVA, type: Wsdl2JavaTask) {
+            description 'Generate java source code from wsdl or xsd files, using apache-cxf-tools.'
+        }
+
+        // add generated sources to java scrdirs
+        project.sourceSets.main.java.srcDirs += project.wsdl2java.generatedWsdlDir
+
+        // make compileJava depend on wsdl2java task
+        project.compileJava.dependsOn project.wsdl2java
+
+
+    }
 }
