@@ -31,7 +31,7 @@ To use this plugin, you must
             mavenCentral()
         }
         dependencies {
-            classpath 'no.nils:wsdl2Java:+'
+            classpath 'no.nils:wsdl2java:+'
         }
     }
     apply plugin: 'no.nils.wsdl2java'
