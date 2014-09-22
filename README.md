@@ -83,11 +83,11 @@ This is a an example of a working build.gradle for a java project. You can also 
 
     buildscript{
         repositories{
-            jcenter()
+            jcenter() 
             mavenCentral()
         }
         dependencies {
-            classpath 'no.nils:wsdl2Java:+'
+            classpath 'no.nils:wsdl2java:+'
         }
     }
 
