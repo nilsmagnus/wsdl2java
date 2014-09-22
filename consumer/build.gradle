@@ -6,7 +6,7 @@ buildscript{
         mavenCentral()
 	}
 	dependencies {
-		classpath 'no.nils:wsdl2Java:+'
+		classpath 'no.nils:wsdl2java:+'
 	}
 }
 
