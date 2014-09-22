@@ -1,7 +1,10 @@
 package no.nils
 
+import org.apache.cxf.tools.common.ToolContext
+import org.apache.cxf.tools.wsdlto.WSDLToJava
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.TaskExecutionException
 
 class Wsdl2JavaTask extends DefaultTask {
     String cxfVersion = "+"
@@ -17,7 +20,12 @@ class Wsdl2JavaTask extends DefaultTask {
             for (int i = 0; i < args.size(); i++)
                 wsdl2JavaArgs[i] = args[i]
 
-            Class.forName("org.apache.cxf.tools.wsdlto.WSDLToJava").main(wsdl2JavaArgs)
+            WSDLToJava w2j = new WSDLToJava(wsdl2JavaArgs);
+            try {
+                w2j.run(new ToolContext());
+            } catch (Exception e) {
+                throw new TaskExecutionException(this, e)
+            }
         }
     }
 }
