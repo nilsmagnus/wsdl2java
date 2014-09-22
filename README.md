@@ -46,7 +46,7 @@ If you want to use a specific version of cxf instead of the latest, you could ov
             mavenCentral()
         }
         dependencies {
-            classpath 'no.nils:wsdl2Java:+'
+            classpath 'no.nils:wsdl2java:+'
             classpath ("org.apache.cxf:cxf-tools:$cxfVersion"){ force = true }
             classpath ("org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:$cxfVersion") { force = true }
             classpath ("org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:$cxfVersion" ) { force = true }
