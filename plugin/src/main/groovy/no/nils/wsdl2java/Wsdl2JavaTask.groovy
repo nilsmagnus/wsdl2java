@@ -1,4 +1,4 @@
-package no.nils
+package no.nils.wsdl2java
 
 import org.apache.cxf.tools.common.ToolContext
 import org.apache.cxf.tools.wsdlto.WSDLToJava

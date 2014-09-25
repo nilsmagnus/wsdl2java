@@ -1,2 +1,2 @@
 #!/bin/sh
-cd plugin && gradle clean build uA && cd .. && cd consumer && rm -rf generated* && gradle clean build --stacktrace
+cd plugin && ../gradlew clean build uA && cd .. && cd consumer && rm -rf generated* && ../gradlew clean build --stacktrace
