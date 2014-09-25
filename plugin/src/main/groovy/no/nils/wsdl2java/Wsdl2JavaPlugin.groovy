@@ -1,8 +1,6 @@
 package no.nils.wsdl2java
-
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.Configuration
 
 class Wsdl2JavaPlugin implements Plugin<Project> {
     public static final String WSDL2JAVA = "wsdl2java"
@@ -11,10 +9,9 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
         // make sure the project has the java plugin
         project.apply(plugin: 'java')
 
-        Configuration config = project.configurations.maybeCreate(WSDL2JAVA)
+        //Configuration config = project.configurations.maybeCreate(WSDL2JAVA)
 
-        // WSDL2JAVA TASK
-        // add task with group and a description
+        // add wsdl2java task with group and a description
         project.task(WSDL2JAVA,
                 type: Wsdl2JavaTask,
                 group: 'Wsdl2Java',
