@@ -22,7 +22,6 @@ repositories {
 
 project.ext {
     cxfVersion = '+' // always the latest version from nexus
-    jaxbVersion = '2.2.4'
 }
 
 dependencies {
@@ -33,10 +32,6 @@ dependencies {
     compile "org.apache.cxf:cxf-tools:$cxfVersion",
             "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:$cxfVersion",
             "org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:$cxfVersion"
-
-    // xsd dependencies
-    compile 'com.sun.xml.bind:jaxb-xjc:$jaxbVersion'
-    compile 'com.sun.xml.bind:jaxb-impl:$jaxbVersion'
 
     testCompile 'junit:junit:4.11'
 }
@@ -75,7 +70,7 @@ publishing {
         }
     }
 }
-       /*
+
 
 bintray {
     apiUrl = "https://api.bintray.com"
@@ -111,4 +106,4 @@ bintray {
     }
 
 }
-*/
+
