@@ -12,6 +12,7 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'idea'
 apply plugin: 'com.jfrog.bintray'
+apply plugin: 'java-gradle-plugin'
 
 // stay compatible with the crowd
 targetCompatibility = 1.6
@@ -25,7 +26,6 @@ project.ext {
 }
 
 dependencies {
-    compile gradleApi()
     compile localGroovy()
 
     // wsdl dependencies

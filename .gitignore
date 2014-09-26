@@ -21,3 +21,4 @@ build
 *.iml
 repo/
 consumer/generated*
+out
