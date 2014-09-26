@@ -31,34 +31,19 @@ To use this plugin, you must
             mavenCentral()
         }
         dependencies {
-            classpath 'no.nils:wsdl2java:+'
+            classpath 'no.nils:wsdl2java:0.4'
         }
     }
     apply plugin: 'no.nils.wsdl2java'
     
     
-#### Specific CXF version
-If you want to use a specific version of cxf instead of the latest, you could override the plugins dependencies by changing the buildscript block to this, where you replace cxfVersion with your version of cxf:
-
-    buildscript{
-        repositories{
-            jcenter()
-            mavenCentral()
-        }
-        dependencies {
-            classpath 'no.nils:wsdl2java:+'
-            classpath ("org.apache.cxf:cxf-tools:$cxfVersion"){ force = true }
-            classpath ("org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:$cxfVersion") { force = true }
-            classpath ("org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:$cxfVersion" ) { force = true }
-        }
-    }
-    apply plugin: 'wsdl2java'
     
 
 ### Options
 There are two properties that you can set
 - generatedWsdlDir : this is where you want the generated sources to be placed. Default value is "generated-sources/src/main/java".
 - wsdlsToGenerate : this is the main input to the plugin that defines the wsdls to process. It is a list of arguments where each argument is a list of arguments to process a wsdl-file. The Wsdl-file with full path is the last argument. The array can be supplied with the same options as described for the maven-cxf plugin(http://cxf.apache.org/docs/wsdl-to-java.html). 
+- cxfVersion: The version of cxf you want to use. Default is the latest(+).
 
 Example setting of options:
 
@@ -68,12 +53,7 @@ Example setting of options:
                     ['src/main/resources/wsdl/firstwsdl.wsdl'],
                     ['-xcj','-b','bingingfile.xml','src/main/resources/wsdl/secodwsdl.wsdl']
             ]
-    }
-
-### Add generated sources to sourceset
-
-    sourceSets{
-        main.java.srcDirs +=[wsdl2java.generatedWsdlDir]
+	cxfVersion = "2.5.1"
     }
     
     
@@ -87,7 +67,7 @@ This is a an example of a working build.gradle for a java project. You can also 
             mavenCentral()
         }
         dependencies {
-            classpath 'no.nils:wsdl2java:+'
+            classpath 'no.nils:wsdl2java:0.4'
         }
     }
 
@@ -107,9 +87,5 @@ This is a an example of a working build.gradle for a java project. You can also 
                 ['src/main/resources/wsdl/stockqoute.wsdl']
         ]
         generatedWsdlDir = "generatedsources"
+	cxfVersion = "3.0.1"
     }
-
-    sourceSets{
-        main.java.srcDirs +=[wsdl2java.generatedWsdlDir]
-    }
-
