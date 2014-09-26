@@ -16,7 +16,7 @@ class Wsdl2JavaPluginTest{
     }
 
     @Test
-    public void greeterPluginAddsGreetingTaskToProject() {
+    public void wsdl2javaPluginAddsWsdl2javaTaskToProject() {
         Project project = ProjectBuilder.builder().build()
         project.apply plugin: 'no.nils.wsdl2java'
 

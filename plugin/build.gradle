@@ -27,12 +27,6 @@ project.ext {
 
 dependencies {
     compile localGroovy()
-
-    // wsdl dependencies
-    compile "org.apache.cxf:cxf-tools:$cxfVersion",
-            "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:$cxfVersion",
-            "org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:$cxfVersion"
-
     testCompile 'junit:junit:4.11'
 }
 
