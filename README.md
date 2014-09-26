@@ -53,7 +53,7 @@ Example setting of options:
                     ['src/main/resources/wsdl/firstwsdl.wsdl'],
                     ['-xcj','-b','bingingfile.xml','src/main/resources/wsdl/secodwsdl.wsdl']
             ]
-	cxfVersion = "2.5.1"
+        cxfVersion = "2.5.1"
     }
     
     
@@ -87,5 +87,5 @@ This is a an example of a working build.gradle for a java project. You can also 
                 ['src/main/resources/wsdl/stockqoute.wsdl']
         ]
         generatedWsdlDir = "generatedsources"
-	cxfVersion = "3.0.1"
+        cxfVersion = "3.0.1"
     }
