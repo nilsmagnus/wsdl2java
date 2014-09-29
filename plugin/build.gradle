@@ -21,12 +21,9 @@ repositories {
     mavenCentral()
 }
 
-project.ext {
-    cxfVersion = '+' // always the latest version from nexus
-}
-
 dependencies {
     compile localGroovy()
+
     testCompile 'junit:junit:4.11'
 }
 
