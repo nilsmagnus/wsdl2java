@@ -9,23 +9,26 @@ import org.gradle.api.tasks.TaskAction
  */
 class Xsd2JavaTask extends DefaultTask {
 
+    def generatedXsdDir = 'generatedsources/src/main/java'
     Configuration classpath
-
+    def xsdsToGenerate
 
     @TaskAction
     public void xsd2java() {
 
         ant.taskdef(name: 'xjc', classname: 'com.sun.tools.xjc.XJCTask', classpath: classpath.asPath)
-        println "hey ho"
 
-        /*
-           xsdsToGenerate.each() { schemaAndPackage ->
-         ant.xjc(
-         destdir: "$generatedWsdlDir",
-         package: schemaAndPackage[1],
-         schema: schemaAndPackage[0]
-         )
-         }
-         */
+        if(!new File(generatedXsdDir).exists()){
+            new File(generatedXsdDir).mkdirs()
+        }
+
+        xsdsToGenerate.each() { schemaAndPackage ->
+            ant.xjc(
+                    destdir: generatedXsdDir,
+                    package: schemaAndPackage[1],
+                    schema: schemaAndPackage[0]
+            )
+        }
+
     }
 }

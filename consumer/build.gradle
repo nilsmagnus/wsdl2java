@@ -29,6 +29,12 @@ wsdl2java{
     cxfVersion = "2.5.1"
 }
 
+xsd2java{
+    xsdsToGenerate = [
+            ["src/main/resources/xsd/CustomersAndOrders.xsd", 'no.nils.xsd2java.sample']
+    ]
+}
+
 sourceSets{
     main.java.srcDirs +=[wsdl2java.generatedWsdlDir]
 }

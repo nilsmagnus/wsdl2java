@@ -46,14 +46,16 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
 
             // add jaxb-xjc
             project.dependencies {
-                xsd2java "com.sun.xml.bind:jaxb-xjc:2.2.10-b140310.1920"
+                xsd2java 'com.sun.xml.bind:jaxb-xjc:2.2.4-1'
             }
 
             // add generated sources to java scrdirs
             project.sourceSets.main.java.srcDirs += project.wsdl2java.generatedWsdlDir
+            project.sourceSets.main.java.srcDirs += project.xsd2java.generatedXsdDir
 
-            // make compileJava depend on wsdl2java task
+            // make compileJava depend on wsdl2java and xsd2java task
             project.compileJava.dependsOn project.wsdl2java
+            project.compileJava.dependsOn project.xsd2java
         }
     }
 }
