@@ -41,6 +41,7 @@ To use this plugin, you must
 
 ### Options
 There are two properties that you can set
+
 | Option | Default value | Description | 
 | ------ | ------------- | ----------- |
 | generatedWsdlDir | generated-sources/src/main/java | this is where you want the generated sources to be placed. |
