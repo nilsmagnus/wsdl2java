@@ -40,13 +40,12 @@ To use this plugin, you must
     
 
 ### Options
-There are two properties that you can set
 
 | Option | Default value | Description | 
 | ------ | ------------- | ----------- |
 | generatedWsdlDir | generated-sources/src/main/java | this is where you want the generated sources to be placed. |
 | wsdlsToGenerate | empty| this is the main input to the plugin that defines the wsdls to process. It is a list of arguments where each argument is a list of arguments to process a wsdl-file. The Wsdl-file with full path is the last argument. The array can be supplied with the same options as described for the maven-cxf plugin(http://cxf.apache.org/docs/wsdl-to-java.html). | 
-| cxfVersion | '+'' (latest)| The version of cxf you want to use. |
+| cxfVersion | '+' (latest)| The version of cxf you want to use. |
 
 Example setting of options:
 
