@@ -48,8 +48,8 @@ There are two properties that you can set
 Example setting of options:
 
     wsdl2java{
-        String generatedWsdlDir  // target directory for generated source coude
-        def wsdlsToGenerate = [   //  2d-array of wsdls and cxf-parameters
+        generatedWsdlDir = "my-generated-sources"  // target directory for generated source coude
+        wsdlsToGenerate = [   //  2d-array of wsdls and cxf-parameters
                     ['src/main/resources/wsdl/firstwsdl.wsdl'],
                     ['-xcj','-b','bingingfile.xml','src/main/resources/wsdl/secodwsdl.wsdl']
             ]
