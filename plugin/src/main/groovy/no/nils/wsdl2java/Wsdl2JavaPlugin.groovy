@@ -7,6 +7,7 @@ import org.gradle.api.artifacts.Configuration
 class Wsdl2JavaPlugin implements Plugin<Project> {
     public static final String WSDL2JAVA = "wsdl2java"
     public static final String XSD2JAVA = "xsd2java"
+    public static final String CLEAN = "cleanGeneratedSources"
 
     void apply(Project project) {
         // make sure the project has the java plugin
@@ -15,14 +16,13 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
         Configuration wsdl2javaConfiguration = project.configurations.maybeCreate(WSDL2JAVA)
         Configuration xsd2javaConfiguration = project.configurations.maybeCreate(XSD2JAVA)
 
-        // add wsdl2java task with group and a description
+        // add xsd2java task with group and a description
         project.task(XSD2JAVA,
                 type: Xsd2JavaTask,
                 group: 'Wsdl2Java',
                 description: 'Generate java source code from XSD files.') {
             classpath = xsd2javaConfiguration
         }
-
 
         // add wsdl2java task with group and a description
         project.task(WSDL2JAVA,
@@ -32,7 +32,11 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
             classpath = wsdl2javaConfiguration
         }
 
-        // TODO this does still not work, ask someone for help/hints on this one
+        // add cleanXsd task with group and a description
+        project.task(CLEAN,
+                type: CleanTask,
+                group: 'Wsdl2Java',
+                description: 'Delete java source code generated from WSDL and XSD files.')
 
         project.afterEvaluate {
             def cxfVersion = project.wsdl2java.cxfVersion
