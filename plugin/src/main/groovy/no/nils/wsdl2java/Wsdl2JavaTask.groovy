@@ -17,6 +17,14 @@ class Wsdl2JavaTask extends DefaultTask {
 
     @TaskAction
     def wsdl2java() {
+        /**
+         * Include the Apache CXF XJC ToString plugin on demand
+         */
+        if (wsdlsToGenerate.collect { it.contains('-xjc-Xts') }.contains(true)) {
+            project.dependencies {
+                wsdl2java 'org.apache.cxf.xjcplugins:cxf-xjc-ts:' + project.wsdl2java.cxfVersion
+            }
+        }
         if(classpath == null) {
             classpath = project.configurations.getByName(Wsdl2JavaPlugin.WSDL2JAVA)
         }
