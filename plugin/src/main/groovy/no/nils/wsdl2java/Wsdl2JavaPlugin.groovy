@@ -42,6 +42,7 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
                 wsdl2java "org.apache.cxf:cxf-tools:$cxfVersion"
                 wsdl2java "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:$cxfVersion"
                 wsdl2java "org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:$cxfVersion"
+                wsdl2java "org.apache.cxf.xjcplugins:cxf-xjc-ts:$cxfVersion"
             }
 
             // add jaxb-xjc
