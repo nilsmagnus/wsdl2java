@@ -2,6 +2,7 @@ package no.nils.wsdl2java
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Configuration
+import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 
 /**
@@ -9,7 +10,9 @@ import org.gradle.api.tasks.TaskAction
  */
 class Xsd2JavaTask extends DefaultTask {
 
-    def generatedXsdDir = 'generatedsources/src/main/java'
+    @OutputDirectory
+    File generatedXsdDir = new File('generatedsources/src/main/java')
+
     Configuration classpath
     def xsdsToGenerate
 
@@ -18,8 +21,8 @@ class Xsd2JavaTask extends DefaultTask {
 
         ant.taskdef(name: 'xjc', classname: 'com.sun.tools.xjc.XJCTask', classpath: classpath.asPath)
 
-        if(!new File(generatedXsdDir).exists()){
-            new File(generatedXsdDir).mkdirs()
+        if(!generatedXsdDir.exists()){
+            generatedXsdDir.mkdirs()
         }
 
         xsdsToGenerate.each() { schemaAndPackage ->

@@ -7,7 +7,7 @@ import org.gradle.api.artifacts.Configuration
 class Wsdl2JavaPlugin implements Plugin<Project> {
     public static final String WSDL2JAVA = "wsdl2java"
     public static final String XSD2JAVA = "xsd2java"
-    public static final String CLEAN = "cleanGeneratedSources"
+    public static final String CLEAN = "deleteGeneratedSources"
 
     void apply(Project project) {
         // make sure the project has the java plugin
@@ -46,7 +46,9 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
                 wsdl2java "org.apache.cxf:cxf-tools:$cxfVersion"
                 wsdl2java "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:$cxfVersion"
                 wsdl2java "org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:$cxfVersion"
-                wsdl2java "org.apache.cxf.xjcplugins:cxf-xjc-ts:$cxfVersion"
+                if (project.wsdl2java.wsdlsToGenerate.collect { it.contains('-xjc-Xts') }.contains(true)) {
+                    wsdl2java "org.apache.cxf.xjcplugins:cxf-xjc-ts:$cxfVersion"
+                }
             }
 
             // add jaxb-xjc
@@ -61,6 +63,8 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
             // make compileJava depend on wsdl2java and xsd2java task
             project.compileJava.dependsOn project.wsdl2java
             project.compileJava.dependsOn project.xsd2java
+
+            project.clean.dependsOn project.deleteGeneratedSources
         }
     }
 }
