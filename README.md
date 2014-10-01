@@ -39,7 +39,7 @@ To use this plugin, you must
     
     
 
-### Options
+### Options for wsdl2java
 
 | Option | Default value | Description | 
 | ------ | ------------- | ----------- |
@@ -60,6 +60,21 @@ Example setting of options:
         cxfVersion = "2.5.1"
     }
     
+### Options for xsd2java
+
+| Option | Default value | Description |
+| ------ | ------------- | ----------- |
+| generatedXsdDir | "generatedsources/src/main/java" | Destination directory for generated sources |
+| xsdsToGenerate | null | 2-d array consisting of 2 values in each array: xsd-file(input) and package for the generated sources |
+
+Example setting of options:
+
+    xsd2java{
+        xsdsToGenerate = [
+            ["src/main/resources/xsd/CustomersAndOrders.xsd", 'no.nils.xsd2java.sample']
+        ]
+        generatedXsdDir = file("generatedsources/xsd2java")
+    }
     
 
 ## Complete example usage
@@ -93,4 +108,10 @@ This is a an example of a working build.gradle for a java project. You can also 
         generatedWsdlDir = file("generatedsources")
         wsdlDir = file("src/main/resources/wsdl")
         cxfVersion = "3.0.1"
+    }
+    xsd2java{
+        xsdsToGenerate = [
+            ["src/main/resources/xsd/CustomersAndOrders.xsd", 'no.nils.xsd2java.sample']
+        ]
+        generatedXsdDir = file("generatedsources/xsd2java")
     }
