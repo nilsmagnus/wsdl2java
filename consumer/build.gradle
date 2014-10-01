@@ -18,12 +18,13 @@ repositories{
 }
 
 dependencies(){
+    compile project(":plugin")
     testCompile 'junit:junit:+'
 }
 
 wsdl2java{
     wsdlsToGenerate = [
-            ['src/main/resources/wsdl/stockqoute.wsdl']
+            [file('src/main/resources/wsdl/stockqoute.wsdl')]
     ]
     generatedWsdlDir = file("generatedsources/wsdl2java")
     wsdlDir = file("src/main/resources/wsdl")
@@ -32,7 +33,7 @@ wsdl2java{
 
 xsd2java{
     xsdsToGenerate = [
-            ["src/main/resources/xsd/CustomersAndOrders.xsd", 'no.nils.xsd2java.sample']
+            [file("src/main/resources/xsd/CustomersAndOrders.xsd"), 'no.nils.xsd2java.sample']
     ]
     generatedXsdDir = file("generatedsources/xsd2java")
 }
