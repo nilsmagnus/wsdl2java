@@ -2,13 +2,21 @@ package no.nils.wsdl2java
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Configuration
+import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskExecutionException
 
 class Wsdl2JavaTask extends DefaultTask {
     // user properties
     String cxfVersion = "+"
-    String generatedWsdlDir = "generated-sources/src/main/java"
+
+    @InputDirectory
+    File wsdlDir = new File("src/main/resources")
+
+    @OutputDirectory
+    File generatedWsdlDir = new File("generated-sources/src/main/java")
+
     def wsdlsToGenerate
 
     // build internal properties

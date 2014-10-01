@@ -25,7 +25,8 @@ wsdl2java{
     wsdlsToGenerate = [
             ['src/main/resources/wsdl/stockqoute.wsdl']
     ]
-    generatedWsdlDir = "generatedsources"
+    generatedWsdlDir = file("generatedsources")
+    wsdlDir = file("src/main/resources/wsdl")
     cxfVersion = "2.5.1"
 }
 
