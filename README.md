@@ -11,10 +11,23 @@ The plugin binaries are downloadable from bintray: https://bintray.com/nilsmagnu
 If you have any issues with the plugin, please file an issue at github, https://github.com/nilsmagnus/wsdl2java/issues
 
 ### Contribution
-Contributions are welcome as long as they are sane. 
+Contributions are welcome as long as they are sane.
+
+#### Contributors
+- Mats Faugli, https://github.com/fowlie
+- Nils Larsgård , https://github.com/nilsmagnus
+
 
 ### CXF
 This plugin uses the apache-cxf tools to do the actual work. 
+
+### Tasks
+
+| Name | Description | Dependecy | 
+| ---- | ----------- | --------- |
+| wsdl2java | Generate java source from wsdl-files | CompileJava depends on wsdl2java |
+| xsd2java | Generate java source from xsd-files | CompileJava depends on xsd2java |
+| deleteGeneratedSources | Delete all generated sources | Clean depends on deleteGeneratedSources |
 
 ## Usage
 
@@ -32,7 +45,7 @@ To use this plugin, you must
             mavenCentral()
         }
         dependencies {
-            classpath 'no.nils:wsdl2java:0.4'
+            classpath 'no.nils:wsdl2java:0.5'
         }
     }
     apply plugin: 'no.nils.wsdl2java'
@@ -87,7 +100,7 @@ This is a an example of a working build.gradle for a java project. You can also 
             mavenCentral()
         }
         dependencies {
-            classpath 'no.nils:wsdl2java:0.4'
+            classpath 'no.nils:wsdl2java:0.5'
         }
     }
 

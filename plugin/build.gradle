@@ -28,7 +28,7 @@ dependencies {
 }
 
 group = 'no.nils'
-version = '0.5-SNAPSHOT'
+version = '0.5'
 
 uploadArchives {
     repositories {
