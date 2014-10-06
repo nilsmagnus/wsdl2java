@@ -9,6 +9,8 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
     public static final String XSD2JAVA = "xsd2java"
     public static final String CLEAN = "deleteGeneratedSources"
 
+    public static final DEFAULT_DESTINATION_DIR = "build/generatedsources/src/main/java"
+
     void apply(Project project) {
         // make sure the project has the java plugin
         project.apply(plugin: 'java')
@@ -56,13 +58,17 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
                 xsd2java 'com.sun.xml.bind:jaxb-xjc:2.2.4-1'
             }
 
-            // add generated sources to java scrdirs
-            project.sourceSets.main.java.srcDirs += project.wsdl2java.generatedWsdlDir
-            project.sourceSets.main.java.srcDirs += project.xsd2java.generatedXsdDir
+            // hook xsd2java into build cycle only if used
+            if(project.xsd2java.xsdsToGenerate != null && project.xsd2java.xsdsToGenerate.size() > 0){
+                project.sourceSets.main.java.srcDirs += project.xsd2java.generatedXsdDir
+                project.compileJava.dependsOn project.xsd2java
+            }
 
-            // make compileJava depend on wsdl2java and xsd2java task
-            project.compileJava.dependsOn project.wsdl2java
-            project.compileJava.dependsOn project.xsd2java
+            // hook wsdl2java into build cycle only if used
+            if(project.wsdl2java.wsdlsToGenerate != null && project.wsdl2java.wsdlsToGenerate.size() >0 ){
+                project.sourceSets.main.java.srcDirs += project.wsdl2java.generatedWsdlDir
+                project.compileJava.dependsOn project.wsdl2java
+            }
 
             project.clean.dependsOn project.deleteGeneratedSources
         }

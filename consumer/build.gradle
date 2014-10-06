@@ -38,6 +38,7 @@ xsd2java{
     generatedXsdDir = file("generatedsources/xsd2java")
 }
 
+
 sourceSets{
     main.java.srcDirs +=[wsdl2java.generatedWsdlDir]
 }

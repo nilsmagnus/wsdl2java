@@ -15,7 +15,7 @@ class Wsdl2JavaTask extends DefaultTask {
     File wsdlDir = new File("src/main/resources")
 
     @OutputDirectory
-    File generatedWsdlDir = new File("generated-sources/src/main/java")
+    File generatedWsdlDir = new File(Wsdl2JavaPlugin.DEFAULT_DESTINATION_DIR)
 
     def wsdlsToGenerate
 
