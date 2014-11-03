@@ -1,20 +1,20 @@
 buildscript{
-	repositories{
-		maven {
+    repositories{
+        maven {
             url uri('../repo')
         }
         mavenCentral()
-	}
-	dependencies {
-		classpath 'no.nils:wsdl2java:+'
-	}
+    }
+    dependencies {
+        classpath 'no.nils:wsdl2java:+'
+    }
 }
 
 apply plugin :'idea'
 apply plugin :'no.nils.wsdl2java'
 
 repositories{
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies(){
@@ -24,7 +24,7 @@ dependencies(){
 
 wsdl2java{
     wsdlsToGenerate = [
-            [file('src/main/resources/wsdl/stockqoute.wsdl')]
+        [file('src/main/resources/wsdl/stockqoute.wsdl')]
     ]
     generatedWsdlDir = file("generatedsources/wsdl2java")
     wsdlDir = file("src/main/resources/wsdl")
@@ -32,8 +32,9 @@ wsdl2java{
 }
 
 xsd2java{
+    encoding = 'utf-8'
     xsdsToGenerate = [
-            [file("src/main/resources/xsd/CustomersAndOrders.xsd"), 'no.nils.xsd2java.sample']
+        [file("src/main/resources/xsd/CustomersAndOrders.xsd"), 'no.nils.xsd2java.sample']
     ]
     generatedXsdDir = file("generatedsources/xsd2java")
 }

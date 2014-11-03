@@ -55,7 +55,8 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
 
             // add jaxb-xjc
             project.dependencies {
-                xsd2java 'com.sun.xml.bind:jaxb-xjc:2.2.4-1'
+                xsd2java 'com.sun.xml.bind:jaxb-xjc:2.2.5'
+                xsd2java 'com.sun.xml.bind:jaxb-impl:2.2.5'
             }
 
             // hook xsd2java into build cycle only if used

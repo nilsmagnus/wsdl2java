@@ -15,6 +15,7 @@ class Xsd2JavaTask extends DefaultTask {
 
     Configuration classpath
     def xsdsToGenerate
+    def encoding
 
     @TaskAction
     public void xsd2java() {
@@ -26,10 +27,16 @@ class Xsd2JavaTask extends DefaultTask {
         }
 
         xsdsToGenerate.each() { schemaAndPackage ->
+            def options = [
+                destdir: generatedXsdDir,
+                package: schemaAndPackage[1],
+                schema: schemaAndPackage[0]
+            ]
+            if (encoding != null) {
+                options.encoding = encoding
+            }
             ant.xjc(
-                    destdir: generatedXsdDir,
-                    package: schemaAndPackage[1],
-                    schema: schemaAndPackage[0]
+                options  
             )
         }
 
