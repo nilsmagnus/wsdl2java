@@ -17,6 +17,7 @@ Contributions are welcome as long as they are sane.
 - Nils Larsgård , https://github.com/nilsmagnus
 - Mats Faugli, https://github.com/fowlie
 - Thorben Schiller, https://github.com/thorbolo
+- Stefan Kloe, https://github.com/Pentadrago
 
 
 ### CXF
