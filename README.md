@@ -81,10 +81,12 @@ Example setting of options:
 | ------ | ------------- | ----------- |
 | generatedXsdDir | "generatedsources/src/main/java" | Destination directory for generated sources |
 | xsdsToGenerate | null | 2-d array consisting of 2 values in each array: xsd-file(input) and package for the generated sources |
+| encoding | platform default encoding | Set the encoding name for generated sources, such as EUC-JP or UTF-8. |
 
 Example setting of options:
 
     xsd2java{
+        encoding = 'utf-8'
         xsdsToGenerate = [
             ["src/main/resources/xsd/CustomersAndOrders.xsd", 'no.nils.xsd2java.sample']
         ]
