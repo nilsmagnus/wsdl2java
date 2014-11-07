@@ -80,7 +80,7 @@ Example setting of options:
 | ------ | ------------- | ----------- |
 | generatedXsdDir | "generatedsources/src/main/java" | Destination directory for generated sources |
 | xsdsToGenerate | null | 2-d array consisting of 2 values in each array: xsd-file(input) and package for the generated sources |
-| encoding | default encoding | Set the encoding name for generated sources, such as EUC-JP or UTF-8. If it is not specified, the platform default encoding is used. |
+| encoding | platform default encoding | Set the encoding name for generated sources, such as EUC-JP or UTF-8. |
 
 Example setting of options:
 
