@@ -14,8 +14,9 @@ If you have any issues with the plugin, please file an issue at github, https://
 Contributions are welcome as long as they are sane.
 
 #### Contributors
-- Mats Faugli, https://github.com/fowlie
 - Nils Larsgård , https://github.com/nilsmagnus
+- Mats Faugli, https://github.com/fowlie
+- Thorben Schiller, https://github.com/thorbolo
 
 
 ### CXF
@@ -45,7 +46,7 @@ To use this plugin, you must
             mavenCentral()
         }
         dependencies {
-            classpath 'no.nils:wsdl2java:0.5'
+            classpath 'no.nils:wsdl2java:0.6'
         }
     }
     apply plugin: 'no.nils.wsdl2java'
@@ -100,7 +101,7 @@ This is a an example of a working build.gradle for a java project. You can also 
             mavenCentral()
         }
         dependencies {
-            classpath 'no.nils:wsdl2java:0.5'
+            classpath 'no.nils:wsdl2java:0.6'
         }
     }
 
