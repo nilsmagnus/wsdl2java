@@ -51,6 +51,9 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
                 if (project.wsdl2java.wsdlsToGenerate.collect { it.contains('-xjc-Xts') }.contains(true)) {
                     wsdl2java "org.apache.cxf.xjcplugins:cxf-xjc-ts:$cxfVersion"
                 }
+                if (project.wsdl2java.wsdlsToGenerate.collect { it.contains('-xjc-Xbg') }.contains(true)) {
+                    wsdl2java "org.apache.cxf.xjcplugins:cxf-xjc-boolean:$cxfVersion"
+                }
             }
 
             // add jaxb-xjc
