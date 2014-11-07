@@ -85,6 +85,7 @@ Example setting of options:
 Example setting of options:
 
     xsd2java{
+        encoding = 'utf-8'
         xsdsToGenerate = [
             ["src/main/resources/xsd/CustomersAndOrders.xsd", 'no.nils.xsd2java.sample']
         ]
