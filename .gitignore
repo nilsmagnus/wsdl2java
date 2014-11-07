@@ -21,3 +21,4 @@ build
 repo/
 consumer/generated*
 out
+.DS_Store
