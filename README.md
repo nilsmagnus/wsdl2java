@@ -93,7 +93,7 @@ Example setting of options:
         ]
         generatedXsdDir = file("generatedsources/xsd2java")
     }
-    
+
 
 ## Complete example usage
 This is a an example of a working build.gradle for a java project. You can also take a look at this projects submodule "consumer" which has a working wsdl compiling.
@@ -121,15 +121,19 @@ This is a an example of a working build.gradle for a java project. You can also 
 
     wsdl2java{
         wsdlsToGenerate = [
-                ['src/main/resources/wsdl/stockqoute.wsdl']
+                ["$projectDir/src/main/resources/wsdl/stockqoute.wsdl"]
         ]
-        generatedWsdlDir = file("generatedsources")
-        wsdlDir = file("src/main/resources/wsdl")
+        generatedWsdlDir = file("$projectDir/generatedsources")
+        wsdlDir = file("$projectDir/src/main/resources/wsdl")
         cxfVersion = "3.0.1"
     }
     xsd2java{
         xsdsToGenerate = [
-            ["src/main/resources/xsd/CustomersAndOrders.xsd", 'no.nils.xsd2java.sample']
+            ["$projectDir/src/main/resources/xsd/CustomersAndOrders.xsd", 'no.nils.xsd2java.sample']
         ]
-        generatedXsdDir = file("generatedsources/xsd2java")
+        generatedXsdDir = file("$projectDir/generatedsources/xsd2java")
     }
+
+### A notice on multi-module projects
+
+Instead of referring to absolute paths in your build-file, try using $projectDir as a prefix to your files and directories. As shown in the "Complete example usage".
