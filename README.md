@@ -81,7 +81,10 @@ Example setting of options:
 | Option | Default value | Description |
 | ------ | ------------- | ----------- |
 | generatedXsdDir | "generatedsources/src/main/java" | Destination directory for generated sources |
-| xsdsToGenerate | null | 2-d array consisting of 2 values in each array: xsd-file(input) and package for the generated sources |
+| xsdsToGenerate | null | 2-d array consisting of 2 or 3 values in each array: 
+1. xsd-file(input) 
+2. package for the generated sources 
+3. (optional) a map containing additional options for the xjc task |
 | encoding | platform default encoding | Set the encoding name for generated sources, such as EUC-JP or UTF-8. |
 
 Example setting of options:
@@ -89,7 +92,7 @@ Example setting of options:
     xsd2java{
         encoding = 'utf-8'
         xsdsToGenerate = [
-            ["src/main/resources/xsd/CustomersAndOrders.xsd", 'no.nils.xsd2java.sample']
+            ["src/main/resources/xsd/CustomersAndOrders.xsd", 'no.nils.xsd2java.sample', [header: false] /* optional map */]
         ]
         generatedXsdDir = file("generatedsources/xsd2java")
     }

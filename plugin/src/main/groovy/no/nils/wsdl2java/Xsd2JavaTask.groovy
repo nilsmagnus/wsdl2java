@@ -32,6 +32,10 @@ class Xsd2JavaTask extends DefaultTask {
                 package: schemaAndPackage[1],
                 schema: schemaAndPackage[0]
             ]
+            // adding additional options to xjc task if available
+            if(schemaAndPackage.size() > 2) {
+                options << schemaAndPackage[2]
+            }
             if (encoding != null) {
                 options.encoding = encoding
             }
