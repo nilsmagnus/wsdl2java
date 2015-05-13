@@ -19,6 +19,7 @@ Contributions are welcome as long as they are sane.
 - Thorben Schiller, https://github.com/thorbolo
 - Stefan Kloe, https://github.com/Pentadrago
 - Mattias Rundgren, https://github.com/matrun
+- "s-doering", https://github.com/s-doering
 
 ### CXF
 This plugin uses the apache-cxf tools to do the actual work. 
