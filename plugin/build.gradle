@@ -48,11 +48,7 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 artifacts {
     archives sourcesJar
 }
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.7'
-}
-
+ 
 publishing {
     publications {
         mavenStuff(MavenPublication) {
