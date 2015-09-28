@@ -31,15 +31,6 @@ wsdl2java{
     cxfVersion = "2.5.1"
 }
 
-xsd2java{
-    encoding = 'utf-8'
-    xsdsToGenerate = [
-        [file("src/main/resources/xsd/CustomersAndOrders.xsd"), 'no.nils.xsd2java.sample']
-    ]
-    generatedXsdDir = file("generatedsources/xsd2java")
-}
-
-
 sourceSets{
     main.java.srcDirs +=[wsdl2java.generatedWsdlDir]
 }

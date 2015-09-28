@@ -8,6 +8,5 @@ class CleanTask extends DefaultTask{
       @TaskAction
       public void clean(){
           project.wsdl2java.generatedWsdlDir.deleteDir()
-          project.xsd2java.generatedXsdDir.deleteDir()
       }
 }

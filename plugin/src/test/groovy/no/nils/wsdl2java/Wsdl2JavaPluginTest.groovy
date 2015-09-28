@@ -16,13 +16,6 @@ class Wsdl2JavaPluginTest{
     }
 
     @Test
-    public void canAddXsdTaskToProject() {
-        Project project = ProjectBuilder.builder().build()
-        def task = project.task('xsd2java', type: Xsd2JavaTask)
-        assertTrue(task instanceof Xsd2JavaTask)
-    }
-
-    @Test
     public void wsdl2javaPluginAddsWsdl2javaTaskToProject() {
         Project project = ProjectBuilder.builder().build()
         project.apply plugin: 'no.nils.wsdl2java'

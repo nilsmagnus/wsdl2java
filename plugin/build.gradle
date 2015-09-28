@@ -28,7 +28,7 @@ dependencies {
 }
 
 group = 'no.nils'
-version = '0.7-SNAPSHOT'
+version = '0.8-SNAPSHOT'
 
 uploadArchives {
     repositories {
@@ -47,6 +47,10 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 
 artifacts {
     archives sourcesJar
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.7'
 }
 
 publishing {

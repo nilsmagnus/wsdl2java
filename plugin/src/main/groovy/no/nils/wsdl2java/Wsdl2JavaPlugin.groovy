@@ -6,7 +6,6 @@ import org.gradle.api.artifacts.Configuration
 
 class Wsdl2JavaPlugin implements Plugin<Project> {
     public static final String WSDL2JAVA = "wsdl2java"
-    public static final String XSD2JAVA = "xsd2java"
     public static final String CLEAN = "deleteGeneratedSources"
 
     public static final DEFAULT_DESTINATION_DIR = "build/generatedsources/src/main/java"
@@ -16,15 +15,8 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
         project.apply(plugin: 'java')
 
         Configuration wsdl2javaConfiguration = project.configurations.maybeCreate(WSDL2JAVA)
-        Configuration xsd2javaConfiguration = project.configurations.maybeCreate(XSD2JAVA)
 
-        // add xsd2java task with group and a description
-        project.task(XSD2JAVA,
-                type: Xsd2JavaTask,
-                group: 'Wsdl2Java',
-                description: 'Generate java source code from XSD files.') {
-            classpath = xsd2javaConfiguration
-        }
+
 
         // add wsdl2java task with group and a description
         project.task(WSDL2JAVA,
@@ -54,18 +46,6 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
                 if (project.wsdl2java.wsdlsToGenerate.collect { it.contains('-xjc-Xbg') }.contains(true)) {
                     wsdl2java "org.apache.cxf.xjcplugins:cxf-xjc-boolean:$cxfVersion"
                 }
-            }
-
-            // add jaxb-xjc
-            project.dependencies {
-                xsd2java 'com.sun.xml.bind:jaxb-xjc:2.2.5'
-                xsd2java 'com.sun.xml.bind:jaxb-impl:2.2.5'
-            }
-
-            // hook xsd2java into build cycle only if used
-            if(project.xsd2java.xsdsToGenerate != null && project.xsd2java.xsdsToGenerate.size() > 0){
-                project.sourceSets.main.java.srcDirs += project.xsd2java.generatedXsdDir
-                project.compileJava.dependsOn project.xsd2java
             }
 
             // hook wsdl2java into build cycle only if used
