@@ -48,7 +48,7 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 artifacts {
     archives sourcesJar
 }
- 
+
 publishing {
     publications {
         mavenStuff(MavenPublication) {

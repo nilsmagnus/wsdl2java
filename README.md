@@ -29,7 +29,7 @@ This plugin uses the apache-cxf tools to do the actual work.
 | Name | Description | Dependecy | 
 | ---- | ----------- | --------- |
 | wsdl2java | Generate java source from wsdl-files | CompileJava depends on wsdl2java |
-| xsd2java | Generate java source from xsd-files | CompileJava depends on xsd2java |
+| ~~xsd2java~~ | ~~Generate java source from xsd-files~~ Removed in version 0.8 | ~~CompileJava depends on xsd2java~~ |
 | deleteGeneratedSources | Delete all generated sources | Clean depends on deleteGeneratedSources |
 
 ## Usage
@@ -78,7 +78,7 @@ Example setting of options:
     }
     
 ### Options for xsd2java
-
+This will not work for version 0.8+!
 | Option | Default value | Description |
 | ------ | ------------- | ----------- |
 | generatedXsdDir | "generatedsources/src/main/java" | Destination directory for generated sources |
