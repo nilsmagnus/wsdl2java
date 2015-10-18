@@ -72,7 +72,7 @@ Example setting of options:
         wsdlDir = file("src/main/resources/myWsdlFiles") // define to support incremental build
         wsdlsToGenerate = [   //  2d-array of wsdls and cxf-parameters
                     ['src/main/resources/wsdl/firstwsdl.wsdl'],
-                    ['-xcj','-b','bingingfile.xml','src/main/resources/wsdl/secodwsdl.wsdl']
+                    ['-xjc','-b','bingingfile.xml','src/main/resources/wsdl/secodwsdl.wsdl']
             ]
         cxfVersion = "2.5.1"
     }
