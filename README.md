@@ -22,11 +22,11 @@ Contributions are welcome as long as they are sane.
 - "s-doering", https://github.com/s-doering
 
 ### CXF
-This plugin uses the apache-cxf tools to do the actual work. 
+This plugin uses the apache-cxf tools to do the actual work.
 
 ### Tasks
 
-| Name | Description | Dependecy | 
+| Name | Description | Dependecy |
 | ---- | ----------- | --------- |
 | wsdl2java | Generate java source from wsdl-files | CompileJava depends on wsdl2java |
 | ~~xsd2java~~ | ~~Generate java source from xsd-files~~ Removed in version 0.8 | ~~CompileJava depends on xsd2java~~ |
@@ -52,15 +52,15 @@ To use this plugin, you must
         }
     }
     apply plugin: 'no.nils.wsdl2java'
-    
-    
-    
+
+
+
 
 ### Options for wsdl2java
 
-| Option | Default value | Description | 
+| Option | Default value | Description |
 | ------ | ------------- | ----------- |
-| generatedWsdlDir | generated-sources/src/main/java | This is where you want the generated sources to be placed. |
+| generatedWsdlDir | generatedsources/src/main/java | This is where you want the generated sources to be placed. |
 | wsdlDir | src/main/resources | Define the wsdl files directory to support incremental build. This means that the task will be up-to-date if nothing in this directory has changed. |
 | wsdlsToGenerate | empty | This is the main input to the plugin that defines the wsdls to process. It is a list of arguments where each argument is a list of arguments to process a wsdl-file. The Wsdl-file with full path is the last argument. The array can be supplied with the same options as described for the maven-cxf plugin(http://cxf.apache.org/docs/wsdl-to-java.html). |
 | cxfVersion | '+' (latest) | The version of cxf you want to use. |
@@ -76,7 +76,7 @@ Example setting of options:
             ]
         cxfVersion = "2.5.1"
     }
-    
+
 ### Options for xsd2java
 This will not work for version 0.8+!
 | Option | Default value | Description |
@@ -101,7 +101,7 @@ This is a an example of a working build.gradle for a java project. You can also 
 
     buildscript{
         repositories{
-            jcenter() 
+            jcenter()
             mavenCentral()
         }
         dependencies {
