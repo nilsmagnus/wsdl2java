@@ -1,5 +1,7 @@
 wsdl2java gradle plugin
 =========
+
+[![Join the chat at https://gitter.im/nilsmagnus/wsdl2java](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nilsmagnus/wsdl2java?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://drone.io/github.com/nilsmagnus/wsdl2java/status.png)](https://drone.io/github.com/nilsmagnus/wsdl2java/latest)
 
 Gradle plugin for generating java from wsdl, using cxf under the hood and the same options as the maven wsdl-2-java plugin from apache-cxf.
