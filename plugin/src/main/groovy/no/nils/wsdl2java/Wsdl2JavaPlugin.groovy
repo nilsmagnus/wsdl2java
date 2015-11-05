@@ -6,7 +6,6 @@ import org.gradle.api.artifacts.Configuration
 
 class Wsdl2JavaPlugin implements Plugin<Project> {
     public static final String WSDL2JAVA = "wsdl2java"
-    public static final String CLEAN = "deleteGeneratedSources"
 
     public static final DEFAULT_DESTINATION_DIR = "build/generatedsources/src/main/java"
 
@@ -25,12 +24,6 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
                 description: 'Generate java source code from WSDL files.') {
             classpath = wsdl2javaConfiguration
         }
-
-        // add cleanXsd task with group and a description
-        project.task(CLEAN,
-                type: CleanTask,
-                group: 'Wsdl2Java',
-                description: 'Delete java source code generated from WSDL and XSD files.')
 
         project.afterEvaluate {
             def cxfVersion = project.wsdl2java.cxfVersion
@@ -53,8 +46,6 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
                 project.sourceSets.main.java.srcDirs += project.wsdl2java.generatedWsdlDir
                 project.compileJava.dependsOn project.wsdl2java
             }
-
-            project.clean.dependsOn project.deleteGeneratedSources
         }
     }
 }

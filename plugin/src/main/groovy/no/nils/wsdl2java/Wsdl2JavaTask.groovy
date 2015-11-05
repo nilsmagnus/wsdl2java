@@ -1,5 +1,10 @@
 package no.nils.wsdl2java
 
+import java.io.File;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.tasks.InputDirectory
@@ -25,6 +30,8 @@ class Wsdl2JavaTask extends DefaultTask {
 
     @TaskAction
     def wsdl2java() {
+		deleteOutputFolders()
+		
         if(classpath == null) {
             classpath = project.configurations.getByName(Wsdl2JavaPlugin.WSDL2JAVA)
         }
@@ -59,4 +66,29 @@ class Wsdl2JavaTask extends DefaultTask {
             classLoader = Thread.currentThread().contextClassLoader
         }
     }
+	
+	protected void deleteOutputFolders() {
+		Set<String> packagePaths = findPackagePaths();
+		if (packagePaths.isEmpty()) {
+			packagePaths.add(""); // add root if no package paths
+		}
+
+		Set<File> packageTargetDirs = packagePaths.collect { subPath -> new File(generatedWsdlDir, subPath) }
+		getLogger().info("Clear target folders {}", packageTargetDirs);
+		getProject().delete(packageTargetDirs);
+	}
+
+	private Set<String> findPackagePaths() {
+		Set<String> packagePaths = new HashSet<>();
+		for (List<String> args : wsdlsToGenerate) {
+			int packageArgIdx = args.indexOf("-p");
+			int packageIx = packageArgIdx+1;
+			if (packageArgIdx != -1 && args.size() >= packageIx) {
+				String pathPath = args.get(packageIx).replace(".", "/");
+				packagePaths.add(pathPath);
+			}
+		}
+		return packagePaths;
+	}
+
 }
