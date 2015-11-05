@@ -1,6 +1,7 @@
 package no.nils.wsdl2java
 
 import java.io.File
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.util.HashSet;
 import java.util.List;
@@ -18,7 +19,8 @@ import groovy.io.FileType;
 class Wsdl2JavaTask extends DefaultTask {
     // user properties
     String cxfVersion = "+"
-	String encoding = "UTF-8"
+	String encoding = Charset.defaultCharset().name()
+	boolean stabilize = false
 
     @InputDirectory
     File wsdlDir = new File("src/main/resources")
@@ -69,26 +71,6 @@ class Wsdl2JavaTask extends DefaultTask {
         }
     }
 	
-	protected void copyToOutputDir(File srcDir) {
-		int srcPathLength = srcDir.getAbsolutePath().size() + 1
-		
-		srcDir.eachFileRecurse(FileType.FILES) { file ->
-			String relPath = file.getAbsolutePath().substring(srcPathLength)
-			File target = new File(generatedWsdlDir, relPath)
-			
-			switchToEncoding(file)
-			project.ant.copy(file: file, tofile: target)
-		}
-	}
-
-	protected void switchToEncoding(File file) {
-		List<String> lines = file.getText().split(System.lineSeparator())
-		file.delete()
-	
-		String text = lines.join(System.lineSeparator()) + System.lineSeparator()  // want empty line last
-		file.withWriter(encoding) { w -> w.write(text) }
-	}
-
     private void setupClassLoader() {
         if (classpath?.files) {
             def urls = classpath.files.collect { it.toURI().toURL() }
@@ -123,4 +105,112 @@ class Wsdl2JavaTask extends DefaultTask {
 		}
 		return packagePaths;
 	}
+
+	protected void copyToOutputDir(File srcDir) {
+		int srcPathLength = srcDir.getAbsolutePath().size() + 1
+		
+		srcDir.eachFileRecurse(FileType.FILES) { file ->
+			String relPath = file.getAbsolutePath().substring(srcPathLength)
+			File target = new File(generatedWsdlDir, relPath)
+			
+			switchToEncoding(file)
+			project.ant.copy(file: file, tofile: target)
+		}
+	}
+
+	protected void switchToEncoding(File file) {
+		List<String> lines = file.getText().split(System.lineSeparator())
+		file.delete()
+
+		if (stabilize) {
+			stripCommentDates(lines)
+			stabilizeCommentLinks(file, lines)
+			stabilizeXmlElementRef(file, lines)
+			stabilizeXmlSeeAlso(file, lines)
+		}
+			
+		String text = lines.join(System.lineSeparator()) + System.lineSeparator()  // want empty line last
+		file.withWriter(encoding) { w -> w.write(text) }
+	}
+
+	void stripCommentDates(List<String> lines) {
+		String prevLine = "";
+		for (ListIterator<String> lix = lines.listIterator(); lix.hasNext();) {
+			String l = lix.next()
+			if (prevLine.contains("This class was generated") && l.startsWith(" * 201")) {
+				lix.remove();
+			}
+			prevLine = l;
+		}
+	}
+	
+	void stabilizeCommentLinks(File file, List<String> lines) {
+		for (ListIterator<String> lix = lines.listIterator(); lix.hasNext();) {
+			String l = lix.next()
+			
+			if (l.contains("* {@link")) {
+				int start = lix.previousIndex()
+				
+				while (lix.hasNext()) {
+					l = lix.next()
+					if (!l.contains("* {@link")) {
+						int end = lix.previousIndex()
+						
+						List<String> subList = lines.subList(start, end);
+						Collections.sort(subList)
+						
+						break
+					}
+				}
+			}
+		}
+	}
+	
+	void stabilizeXmlSeeAlso(File file, List<String> lines) {
+		String seeAlsoStart = "@XmlSeeAlso({"
+		String seeAlsoEnd = "})"
+		for (ListIterator<String> lix = lines.listIterator(); lix.hasNext();) {
+			String l = lix.next()
+			
+			if (l.startsWith(seeAlsoStart) && l.endsWith(seeAlsoEnd)) {
+				List<String> classes = l.replace(seeAlsoStart, "").replace(seeAlsoEnd, "").split(",").collect { it.trim() }
+				String sortedClasses = seeAlsoStart + classes.sort().join(", ") + seeAlsoEnd
+				lix.set(sortedClasses)
+			}
+		}
+	}
+	
+	void stabilizeXmlElementRef(File file, List<String> lines) {
+		String prevLine = "";
+		for (ListIterator<String> lix = lines.listIterator(); lix.hasNext();) {
+			String l = lix.next()
+			
+			if (l.contains("@XmlElementRef") && prevLine.contains("@XmlElementRefs")) {
+				int start = lix.previousIndex()
+	
+				while (lix.hasNext()) {
+					l = lix.next()
+					if (!l.contains("@XmlElementRef")) {
+						int end = lix.previousIndex()
+						
+						List<String> subList = lines.subList(start, end);
+						Collections.sort(subList)
+						
+						// Fix ,-separation of lines
+						for (ListIterator<String> subLix = subList.listIterator(); subLix.hasNext();) {
+							String line = subLix.next()
+							
+							line = line.replaceFirst(',$', "")
+							if (subLix.hasNext()) {
+								line = line + ","
+							}
+							subLix.set(line)
+						}
+						break
+					}
+				}
+			}
+			prevLine = l;
+		}
+	}	
 }
