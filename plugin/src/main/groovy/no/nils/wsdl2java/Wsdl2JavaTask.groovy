@@ -17,10 +17,12 @@ import org.gradle.api.tasks.TaskExecutionException
 import groovy.io.FileType;
 
 class Wsdl2JavaTask extends DefaultTask {
+	private static final NEWLINE = System.getProperty("line.separator");
     // user properties
     String cxfVersion = "+"
 	String encoding = Charset.defaultCharset().name()
 	boolean stabilize = false
+	boolean stabilizeAndMergeObjectFactory = false
 
     @InputDirectory
     File wsdlDir = new File("src/main/resources")
@@ -114,12 +116,17 @@ class Wsdl2JavaTask extends DefaultTask {
 			File target = new File(generatedWsdlDir, relPath)
 			
 			switchToEncoding(file)
-			project.ant.copy(file: file, tofile: target)
+			
+			if (stabilizeAndMergeObjectFactory) {
+				mergeAndStabilizeObjectFactory(file, target)
+			} else {
+				project.ant.copy(file: file, tofile: target)
+			}			
 		}
 	}
 
 	protected void switchToEncoding(File file) {
-		List<String> lines = file.getText().split(System.lineSeparator())
+		List<String> lines = file.getText().split(NEWLINE)
 		file.delete()
 
 		if (stabilize) {
@@ -128,8 +135,8 @@ class Wsdl2JavaTask extends DefaultTask {
 			stabilizeXmlElementRef(file, lines)
 			stabilizeXmlSeeAlso(file, lines)
 		}
-			
-		String text = lines.join(System.lineSeparator()) + System.lineSeparator()  // want empty line last
+
+		String text = lines.join(NEWLINE) + NEWLINE  // want empty line last
 		file.withWriter(encoding) { w -> w.write(text) }
 	}
 
@@ -213,4 +220,32 @@ class Wsdl2JavaTask extends DefaultTask {
 			prevLine = l;
 		}
 	}	
+	
+	protected void mergeAndStabilizeObjectFactory(File src, File target) {
+		if (!target.exists()) {
+			target.getParentFile().mkdirs()
+			project.ant.copy(file: src, tofile: target)
+			stabilizeObjFacWithItself(target);
+		} else {
+			stabilizeObjFacWithTarget(src, target)
+		}
+	}
+
+	private void stabilizeObjFacWithItself(File target) {
+		if (isObjectFactory(target)) {
+			getLogger().info(" stabilize ${target}")
+			ObjectFactoryMerger.merge(target, target, encoding)
+		}
+	}
+
+	private stabilizeObjFacWithTarget(File src, File target) {
+		if (isObjectFactory(src) && src.getText(encoding) != target.getText(encoding)) {
+			getLogger().info(" merge     ${target}")
+			ObjectFactoryMerger.merge(src, target, encoding)
+		}
+	}
+
+	private boolean isObjectFactory(File f) {
+		return "ObjectFactory.java".equals(f.getName());
+	}
 }
