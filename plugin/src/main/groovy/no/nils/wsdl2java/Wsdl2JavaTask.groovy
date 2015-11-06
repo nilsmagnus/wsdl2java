@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Configuration
+import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
@@ -19,9 +20,13 @@ import groovy.io.FileType;
 class Wsdl2JavaTask extends DefaultTask {
 	private static final NEWLINE = System.getProperty("line.separator");
     // user properties
+	@Input
     String cxfVersion = "+"
+	@Input
 	String encoding = Charset.defaultCharset().name()
+	@Input
 	boolean stabilize = false
+	@Input
 	boolean stabilizeAndMergeObjectFactory = false
 
     @InputDirectory
@@ -36,6 +41,12 @@ class Wsdl2JavaTask extends DefaultTask {
     Configuration classpath
     ClassLoader classLoader
 
+	public Wsdl2JavaTask() {
+		project.afterEvaluate {
+			inputs.property("wsdls", wsdlsToGenerate.toString())
+		}
+	}
+	
     @TaskAction
     def wsdl2java() {
 		deleteOutputFolders()
