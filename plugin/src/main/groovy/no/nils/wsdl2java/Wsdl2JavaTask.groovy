@@ -21,8 +21,6 @@ class Wsdl2JavaTask extends DefaultTask {
 	private static final NEWLINE = System.getProperty("line.separator");
     // user properties
 	@Input
-    String cxfVersion = "+"
-	@Input
 	String encoding = Charset.defaultCharset().name()
 	@Input
 	boolean stabilize = false
