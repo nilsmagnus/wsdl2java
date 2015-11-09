@@ -6,17 +6,18 @@ import org.gradle.api.artifacts.Configuration
 
 class Wsdl2JavaPlugin implements Plugin<Project> {
     public static final String WSDL2JAVA = "wsdl2java"
-    public static final String CLEAN = "deleteGeneratedSources"
-
+	public static final String CLEAN = "deleteGeneratedSources"
+	public static final String WSDL2JAVA_EXT = "wsdl2javaExt"
+	
     public static final DEFAULT_DESTINATION_DIR = "build/generatedsources/src/main/java"
 
     void apply(Project project) {
         // make sure the project has the java plugin
         project.apply(plugin: 'java')
 
+		Wsdl2JavaPluginExtension ext = project.extensions.create(WSDL2JAVA_EXT, Wsdl2JavaPluginExtension.class)
+		
         Configuration wsdl2javaConfiguration = project.configurations.maybeCreate(WSDL2JAVA)
-
-
 
         // add wsdl2java task with group and a description
         project.task(WSDL2JAVA,
@@ -26,14 +27,14 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
             classpath = wsdl2javaConfiguration
         }
 
-        // add cleanXsd task with group and a description
-        project.task(CLEAN,
-                type: CleanTask,
-                group: 'Wsdl2Java',
-                description: 'Delete java source code generated from WSDL and XSD files.')
-
+		// add cleanXsd task with group and a description
+		project.task(CLEAN,
+			type: CleanTask,
+			group: 'Wsdl2Java',
+			description: 'Delete java source code generated from WSDL and XSD files.')
+				
         project.afterEvaluate {
-            def cxfVersion = project.wsdl2java.cxfVersion
+            def cxfVersion = ext.cxfVersion
 
             // add cxf as dependency
             project.dependencies {
@@ -53,8 +54,10 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
                 project.sourceSets.main.java.srcDirs += project.wsdl2java.generatedWsdlDir
                 project.compileJava.dependsOn project.wsdl2java
             }
-
-            project.clean.dependsOn project.deleteGeneratedSources
+			
+			if (ext.deleteGeneratedSourcesOnClean) {
+				project.clean.dependsOn project.deleteGeneratedSources
+			}
         }
     }
 }
