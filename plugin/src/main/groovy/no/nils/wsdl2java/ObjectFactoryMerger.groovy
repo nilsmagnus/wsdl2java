@@ -36,7 +36,7 @@ public class ObjectFactoryMerger {
 		sb.append(NEWLINE);
 		sb.append(imports.toList().sort().join(NEWLINE));
 		sb.append(NEWLINE).append(NEWLINE);
-		sb.append(String.join(NEWLINE, classDef));
+		sb.append(classDef.join(NEWLINE));
 		sb.append(NEWLINE).append(NEWLINE);
 		sb.append(constants.toList().sort().join(NEWLINE));
 		sb.append(NEWLINE).append(NEWLINE);
@@ -139,7 +139,6 @@ public class ObjectFactoryMerger {
 		return methodLines.join(NEWLINE);
 	}
 
-	
 	private void ignoreEmptyLines(Deque<String> lines) {
 		String l;
 		while ((l = lines.pollFirst()) != null) {
@@ -156,7 +155,13 @@ public class ObjectFactoryMerger {
 		
 		CreateMethod(String definition) {
 			this.definition = definition;
-			uniqMethodName = definition.replaceFirst("(?s).*public ", "").replaceFirst("[^ ]+ ", "").replaceFirst("(?s)\\(.*",  "");
+			
+			String woPrefix = definition.replaceFirst("(?s).*public ", "")
+			String woReturnType = woPrefix.replaceFirst("[^ ]+ ", "")
+			String woBody = woReturnType.replaceFirst("(?s) .*", "");
+			String methodName = woBody.replaceFirst("\\(.*", "");
+			boolean isEmptyCreator = woBody.contains("()")
+			uniqMethodName = isEmptyCreator ? "_" + methodName : methodName
 		}
 
 		@Override
