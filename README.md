@@ -79,7 +79,7 @@ Example setting of options:
         cxfVersion = "2.5.1"
     }
 
-### Options for xsd2java
+### Options for xsd2java (deprecated, separate plugin coming soon)
 This will not work for version 0.8+!
 | Option | Default value | Description |
 | ------ | ------------- | ----------- |
