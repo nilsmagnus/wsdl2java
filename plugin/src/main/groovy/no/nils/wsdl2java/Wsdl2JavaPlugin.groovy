@@ -38,7 +38,6 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
 
             // add cxf as dependency
             project.dependencies {
-                wsdl2java "org.apache.cxf:cxf-tools:$cxfVersion"
                 wsdl2java "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:$cxfVersion"
                 wsdl2java "org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:$cxfVersion"
                 if (project.wsdl2java.wsdlsToGenerate.collect { it.contains('-xjc-Xts') }.contains(true)) {
