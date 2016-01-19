@@ -51,7 +51,7 @@ To use this plugin, you must
             mavenCentral()
         }
         dependencies {
-            classpath 'no.nils:wsdl2java:0.8'
+            classpath 'no.nils:wsdl2java:0.9'
         }
     }
     apply plugin: 'no.nils.wsdl2java'
@@ -108,7 +108,7 @@ This is a an example of a working build.gradle for a java project. You can also 
             mavenCentral()
         }
         dependencies {
-            classpath 'no.nils:wsdl2java:0.8'
+            classpath 'no.nils:wsdl2java:0.9'
         }
     }
 
@@ -131,13 +131,7 @@ This is a an example of a working build.gradle for a java project. You can also 
         wsdlDir = file("$projectDir/src/main/resources/wsdl")
         cxfVersion = "3.0.1"
     }
-    xsd2java{
-        xsdsToGenerate = [
-            ["$projectDir/src/main/resources/xsd/CustomersAndOrders.xsd", 'no.nils.xsd2java.sample']
-        ]
-        generatedXsdDir = file("$projectDir/generatedsources/xsd2java")
-    }
-
+     
 ### A notice on multi-module projects
 
 Instead of referring to absolute paths in your build-file, try using $projectDir as a prefix to your files and directories. As shown in the "Complete example usage".
