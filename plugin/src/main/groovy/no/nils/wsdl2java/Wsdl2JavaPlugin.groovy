@@ -8,7 +8,7 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
     public static final String WSDL2JAVA = "wsdl2java"
 	public static final String CLEAN = "deleteGeneratedSources"
 	public static final String WSDL2JAVA_EXT = "wsdl2javaExt"
-	
+
     public static final DEFAULT_DESTINATION_DIR = "build/generatedsources/src/main/java"
 
     void apply(Project project) {
@@ -16,7 +16,7 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
         project.apply(plugin: 'java')
 
 		Wsdl2JavaPluginExtension ext = project.extensions.create(WSDL2JAVA_EXT, Wsdl2JavaPluginExtension.class)
-		
+
         Configuration wsdl2javaConfiguration = project.configurations.maybeCreate(WSDL2JAVA)
 
         // add wsdl2java task with group and a description
@@ -32,7 +32,7 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
 			type: CleanTask,
 			group: 'Wsdl2Java',
 			description: 'Delete java source code generated from WSDL and XSD files.')
-				
+
         project.afterEvaluate {
             def cxfVersion = ext.cxfVersion
 
@@ -53,7 +53,7 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
                 project.sourceSets.main.java.srcDirs += project.wsdl2java.generatedWsdlDir
                 project.compileJava.dependsOn project.wsdl2java
             }
-			
+
 			if (ext.deleteGeneratedSourcesOnClean) {
 				project.clean.dependsOn project.deleteGeneratedSources
 			}
