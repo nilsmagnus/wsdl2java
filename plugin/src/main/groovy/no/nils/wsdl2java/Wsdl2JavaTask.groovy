@@ -35,6 +35,11 @@ class Wsdl2JavaTask extends DefaultTask {
 
     def wsdlsToGenerate
 
+    /**
+     * The Locale for the generated Java classes.
+     */
+    Locale locale = Locale.getDefault()
+
     // build internal properties
     Configuration classpath
     ClassLoader classLoader
@@ -72,16 +77,19 @@ class Wsdl2JavaTask extends DefaultTask {
             def toolContext = classLoader.loadClass("org.apache.cxf.tools.common.ToolContext").newInstance()
             wsdlToJava.args = wsdl2JavaArgs
            // WSDLToJava w2j = new WSDLToJava(wsdl2JavaArgs);
-            try {
-                wsdlToJava.run(toolContext);
-            } catch (Exception e) {
-                throw new TaskExecutionException(this, e)
+
+            runWithLocale(this.locale) { ->
+                try {
+                    wsdlToJava.run(toolContext);
+                } catch (Exception e) {
+                    throw new TaskExecutionException(this, e)
+                }
             }
-			
+
 			copyToOutputDir(targetDir)
         }
     }
-	
+
     private void setupClassLoader() {
         if (classpath?.files) {
             def urls = classpath.files.collect { it.toURI().toURL() }
@@ -92,7 +100,22 @@ class Wsdl2JavaTask extends DefaultTask {
             classLoader = Thread.currentThread().contextClassLoader
         }
     }
-	
+
+    protected void runWithLocale(Locale locale, Closure<Void> closure) {
+        // save the current default locale – will be set back at the end
+        Locale currentDefaultLocale = Locale.getDefault()
+        try {
+            // set the wanted locale for the generated java classes
+            Locale.setDefault(locale)
+
+            closure()
+        }
+        finally {
+            // set the default locale back to the previous default
+            Locale.setDefault(currentDefaultLocale)
+        }
+    }
+
 	protected void deleteOutputFolders() {
 		Set<String> packagePaths = findPackagePaths();
 		if (packagePaths.isEmpty()) {
