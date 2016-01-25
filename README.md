@@ -73,6 +73,7 @@ Example of specifying another CXF version:
 
 
 Example of retaining the generated sources on clean:
+
     wsdl2javaExt {
         deleteGeneratedSourcesOnClean = false
     }
