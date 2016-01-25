@@ -57,6 +57,26 @@ To use this plugin, you must
     apply plugin: 'no.nils.wsdl2java'
 
 
+### Plugin options
+
+| Option | Default value | Description |
+| ------ | ------------- | ----------- |
+| cxfVersion | "+" | Controls the CXF version used to generate code.
+| deleteGeneratedSourcesOnClean | true | If you want to keep the generated sources under version control, set this option to false. |
+
+
+Example of specifying another CXF version:
+
+    wsdl2javaExt {
+        cxfVersion = "2.5.1"
+    }
+
+
+Example of retaining the generated sources on clean:
+    wsdl2javaExt {
+        deleteGeneratedSourcesOnClean = false
+    }
+
 
 
 ### Options for wsdl2java
@@ -66,9 +86,7 @@ To use this plugin, you must
 | generatedWsdlDir | generatedsources/src/main/java | This is where you want the generated sources to be placed. |
 | wsdlDir | src/main/resources | Define the wsdl files directory to support incremental build. This means that the task will be up-to-date if nothing in this directory has changed. |
 | wsdlsToGenerate | empty | This is the main input to the plugin that defines the wsdls to process. It is a list of arguments where each argument is a list of arguments to process a wsdl-file. The Wsdl-file with full path is the last argument. The array can be supplied with the same options as described for the maven-cxf plugin(http://cxf.apache.org/docs/wsdl-to-java.html). |
-| cxfVersion | '+' (latest) | The version of cxf you want to use. |
 | locale | Locale.getDefault() | The locale for the generated sources – especially the JavaDoc. This might be necessary to prevent differing sources due to several development environments. |
-
 Example setting of options:
 
     wsdl2java {
@@ -78,7 +96,6 @@ Example setting of options:
                     ['src/main/resources/wsdl/firstwsdl.wsdl'],
                     ['-xjc','-b','bingingfile.xml','src/main/resources/wsdl/secodwsdl.wsdl']
             ]
-        cxfVersion = "2.5.1"
         locale = Locale.GERMANY
     }
 
@@ -131,7 +148,6 @@ This is a an example of a working build.gradle for a java project. You can also 
         ]
         generatedWsdlDir = file("$projectDir/generatedsources")
         wsdlDir = file("$projectDir/src/main/resources/wsdl")
-        cxfVersion = "3.0.1"
         locale = Locale.FRANCE
     }
      
