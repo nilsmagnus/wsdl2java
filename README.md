@@ -101,7 +101,9 @@ Example setting of options:
     }
 
 ### Options for xsd2java (deprecated, separate plugin coming soon)
+
 This will not work for version 0.8+!
+
 | Option | Default value | Description |
 | ------ | ------------- | ----------- |
 | generatedXsdDir | "generatedsources/src/main/java" | Destination directory for generated sources |
