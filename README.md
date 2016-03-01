@@ -147,7 +147,7 @@ This is a an example of a working build.gradle for a java project. You can also 
 
     wsdl2java{
         wsdlsToGenerate = [
-                ["$projectDir/src/main/resources/wsdl/stockqoute.wsdl"]
+                ['-p','com.acme.mypackage', '-autoNameResolution',"$projectDir/src/main/resources/wsdl/stockqoute.wsdl"]
         ]
         generatedWsdlDir = file("$projectDir/generatedsources")
         wsdlDir = file("$projectDir/src/main/resources/wsdl")
