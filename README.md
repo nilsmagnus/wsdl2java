@@ -88,6 +88,8 @@ Example of retaining the generated sources on clean:
 | wsdlDir | src/main/resources | Define the wsdl files directory to support incremental build. This means that the task will be up-to-date if nothing in this directory has changed. |
 | wsdlsToGenerate | empty | This is the main input to the plugin that defines the wsdls to process. It is a list of arguments where each argument is a list of arguments to process a wsdl-file. The Wsdl-file with full path is the last argument. The array can be supplied with the same options as described for the maven-cxf plugin(http://cxf.apache.org/docs/wsdl-to-java.html). |
 | locale | Locale.getDefault() | The locale for the generated sources – especially the JavaDoc. This might be necessary to prevent differing sources due to several development environments. |
+| stabilizeAndMergeObjectFactory| false | If multiple WSDLs target the same package, merge their ObjectFactory.java classes |
+
 Example setting of options:
 
     wsdl2java {
