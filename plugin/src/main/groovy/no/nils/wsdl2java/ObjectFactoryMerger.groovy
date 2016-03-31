@@ -2,6 +2,7 @@ package no.nils.wsdl2java;
 
 /**
  * Takes one or more ObjectFactory java files and merge them, sorting the lines in the process.
+ * This code relies *entirely* only blank lines as separaters between methods. It is not very clever.
  */
 public class ObjectFactoryMerger {
 	private static final String NEWLINE = System.getProperty("line.separator");
@@ -59,7 +60,7 @@ public class ObjectFactoryMerger {
 		consumeClass(lines);
 		consumeConstants(lines);
 		
-		constructorDef = consumeMethod(lines);
+		constructorDef = consumeConstructor(lines);
 		
 		String createMethodDef;
 		while ((createMethodDef = consumeMethod(lines)) != null) {
@@ -111,6 +112,11 @@ public class ObjectFactoryMerger {
 			if (l.isEmpty()) {
 				break;
 			}
+			if (!l.contains("static")) {
+				lines.addFirst(l);
+				break;
+			}
+			
 			if (l.contains("QName")) {
 				constants.add(l);
 			}
@@ -137,6 +143,19 @@ public class ObjectFactoryMerger {
 		}
 		
 		return methodLines.join(NEWLINE);
+	}
+
+	private String consumeConstructor(Deque<String> lines) {
+		String constructorStr = consumeMethod(lines)
+
+		// If it doesn't look like a constructor, push the lines back		
+		if (!constructorStr.contains("ObjectFactory()")) {
+			lines.addFirst("")
+			constructorStr.split(NEWLINE).reverseEach { lines.addFirst(it) }
+			constructorStr = ""
+		}
+
+		return constructorStr
 	}
 
 	private void ignoreEmptyLines(Deque<String> lines) {

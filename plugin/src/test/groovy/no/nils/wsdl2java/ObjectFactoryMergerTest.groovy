@@ -31,4 +31,18 @@ class ObjectFactoryMergerTest{
 		File expected = new File("src/test/data/objectfactorymerger/dokumentutil/ObjectFactory_sorted.java")
 		assertEquals("Sorting should be stable", expected.getText("UTF-8"), output.getText("UTF-8"))
     }
+
+	
+	@Test
+    public void mergeWithoutNoCreatorWorks() {
+		File input = new File("src/test/data/objectfactorymerger/autodesktopservice/ObjectFactory.java")
+		
+		File output = new File(outputDir, "ObjectFactory.java")
+		output.withWriter("UTF-8") { w -> w.write(input.getText("UTF-8")) }
+		
+		ObjectFactoryMerger.merge(input, output, "UTF-8")
+		
+		File expected = new File("src/test/data/objectfactorymerger/autodesktopservice/ObjectFactory_sorted.java")
+		assertEquals("Sorting should be stable", expected.getText("UTF-8"), output.getText("UTF-8"))
+    }
 }
