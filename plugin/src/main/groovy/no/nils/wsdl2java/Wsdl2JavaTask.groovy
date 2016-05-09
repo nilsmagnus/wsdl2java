@@ -133,7 +133,10 @@ class Wsdl2JavaTask extends DefaultTask {
 			int packageArgIdx = args.indexOf("-p");
 			int packageIx = packageArgIdx+1;
 			if (packageArgIdx != -1 && args.size() >= packageIx) {
-				String pathPath = args.get(packageIx).replace(".", "/");
+				//check if it's wsdl-namespace=package
+				String[] maybeWsdlNameSpaceAndPackage= args.get(packageIx).split("=")
+				String packageName= maybeWsdlNameSpaceAndPackage.size() == 1 ? maybeWsdlNameSpaceAndPackage[0] : maybeWsdlNameSpaceAndPackage[1]
+				String pathPath= packageName.replace(".", "/");
 				packagePaths.add(pathPath);
 			}
 		}
