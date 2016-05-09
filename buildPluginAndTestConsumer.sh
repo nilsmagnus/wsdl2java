@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cd plugin && gradle clean build uA && cd ../consumer && gradle clean build --stacktrace
+cd plugin && ../gradlew clean build uA && cd ../consumer && ../gradlew clean build --stacktrace
