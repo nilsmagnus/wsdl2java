@@ -35,16 +35,17 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
 
         project.afterEvaluate {
             def cxfVersion = ext.cxfVersion
+            def cxfPluginsVersion = ext.cxfPluginsVersion
 
             // add cxf as dependency
             project.dependencies {
                 wsdl2java "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:$cxfVersion"
                 wsdl2java "org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:$cxfVersion"
                 if (project.wsdl2java.wsdlsToGenerate.collect { it.contains('-xjc-Xts') }.contains(true)) {
-                    wsdl2java "org.apache.cxf.xjcplugins:cxf-xjc-ts:$cxfVersion"
+                    wsdl2java "org.apache.cxf.xjcplugins:cxf-xjc-ts:$cxfPluginsVersion"
                 }
                 if (project.wsdl2java.wsdlsToGenerate.collect { it.contains('-xjc-Xbg') }.contains(true)) {
-                    wsdl2java "org.apache.cxf.xjcplugins:cxf-xjc-boolean:$cxfVersion"
+                    wsdl2java "org.apache.cxf.xjcplugins:cxf-xjc-boolean:$cxfPluginsVersion"
                 }
             }
 

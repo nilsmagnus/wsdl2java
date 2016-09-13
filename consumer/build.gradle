@@ -28,7 +28,8 @@ wsdl2java{
     ]
     generatedWsdlDir = file("generatedsources/wsdl2java")
     wsdlDir = file("src/main/resources/wsdl")
-    ext.cxfVersion = "2.5.1"
+    ext.cxfVersion = "3.1.6"
+    ext.cxfPluginsVersion = "3.0.5"
 }
 
 sourceSets{

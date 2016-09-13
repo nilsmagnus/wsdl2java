@@ -63,13 +63,15 @@ To use this plugin, you must
 | Option | Default value | Description |
 | ------ | ------------- | ----------- |
 | cxfVersion | "+" | Controls the CXF version used to generate code.
+| cxfPluginsVersion | "+" | Controls the CXF plugins version used to generate code.
 | deleteGeneratedSourcesOnClean | true | If you want to keep the generated sources under version control, set this option to false. |
 
 
 Example of specifying another CXF version:
 
     wsdl2javaExt {
-        cxfVersion = "2.5.1"
+        cxfVersion = "3.1.6"
+        cxfPluginsVersion = "3.0.5"
     }
 
 
@@ -158,7 +160,8 @@ This is a an example of a working build.gradle for a java project. You can also 
     }
 
     wsdl2javaExt {
-        cxfVersion = "2.5.1"
+        cxfVersion = "3.1.6"
+        cxfPluginsVersion = "3.0.5"
     }
 
 ## Enable basic extension support for xjc
