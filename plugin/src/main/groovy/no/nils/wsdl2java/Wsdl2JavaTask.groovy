@@ -88,6 +88,7 @@ class Wsdl2JavaTask extends DefaultTask {
 
 			copyToOutputDir(targetDir)
         }
+	    	tmpDir.deleteDir()
     }
 
     private void setupClassLoader() {
