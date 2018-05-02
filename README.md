@@ -63,7 +63,7 @@ To use this plugin, you must
 | Option | Default value | Description |
 | ------ | ------------- | ----------- |
 | cxfVersion | "+" | Controls the CXF version used to generate code.
-| deleteGeneratedSourcesOnClean | true | If you want to keep the generated sources under version control, set this option to false. |
+| deleteGeneratedSourcesOnClean | `false` | If you want to delete the generated sources when `clean` task is invoked, set this option to `true`. |
 
 
 Example of specifying another CXF version:
@@ -73,10 +73,10 @@ Example of specifying another CXF version:
     }
 
 
-Example of retaining the generated sources on clean:
+Example of deleting the generated sources on clean:
 
     wsdl2javaExt {
-        deleteGeneratedSourcesOnClean = false
+        deleteGeneratedSourcesOnClean = true
     }
 
 
