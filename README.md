@@ -166,6 +166,13 @@ This is a an example of a working build.gradle for a java project. You can also 
 If you're building the example with JDK 9 make sure to include the following dependencies explicitly:
 
 ```gradle
+    // the dependency for the task also needs to be declared
+    wsdl2java 'com.sun.xml.bind:jaxb-xjc:2.3.0.1'
+    wsdl2java 'javax.xml.bind:jaxb-api:2.3.1'
+    wsdl2java 'javax.xml.ws:jaxws-api:2.3.1'
+    wsdl2java 'org.apache.cxf:cxf-rt-wsdl:3.2.7'
+    wsdl2java 'javax.jws:javax.jws-api:1.1'
+
     implementation 'com.sun.xml.bind:jaxb-xjc:2.3.0.1'
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
     implementation 'javax.xml.ws:jaxws-api:2.3.1'
