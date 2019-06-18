@@ -46,6 +46,8 @@ To use this plugin, you must
 
 ### Applying the plugin
 
+Groovy:
+
     buildscript{
         repositories{
             jcenter()
@@ -56,6 +58,13 @@ To use this plugin, you must
         }
     }
     apply plugin: 'no.nils.wsdl2java'
+
+Kotlin:
+
+    plugins {
+        id("java")
+        id("no.nils.wsdl2java") version "0.10"
+    }
 
 
 ### Plugin options
@@ -68,18 +77,33 @@ To use this plugin, you must
 
 Example of specifying another CXF version:
 
+Groovy: 
+
     wsdl2javaExt {
         cxfVersion = "2.5.1"
     }
 
+Kotlin:
+
+    extra["cxfVersion"] = "3.3.2"
+    
+    project.wsdl2javaExt {
+        cxfVersion = "${property("cxfVersion")}"
+    }
 
 Example of deleting the generated sources on clean:
+
+Groovy:
 
     wsdl2javaExt {
         deleteGeneratedSourcesOnClean = true
     }
 
+Kotlin:
 
+    project.wsdl2javaExt {
+	    deleteGeneratedSourcesOnClean = true
+    }
 
 ### Options for wsdl2java
 
@@ -93,6 +117,8 @@ Example of deleting the generated sources on clean:
 
 Example setting of options:
 
+Groovy:
+
     wsdl2java {
         generatedWsdlDir = file("my-generated-sources")  // target directory for generated source coude
         wsdlDir = file("src/main/resources/myWsdlFiles") // define to support incremental build
@@ -102,6 +128,18 @@ Example setting of options:
             ]
         locale = Locale.GERMANY
     }
+    
+Kotlin:
+
+    tasks.getByName<no.nils.wsdl2java.Wsdl2JavaTask>("wsdl2java") {
+        wsdlDir = file("$projectDir/src/main/wsdl") // wslds location
+        generatedWsdlDir = file("$projectDir/src/main/generated-sources/") // store generates java classes to
+        wsdlsToGenerate = arrayListOf(
+            arrayListOf("$wsdlDir/firstwsdl.wsdl"),
+            arrayListOf("-xjc", "-b", "bindingfile.xml", "$wsdlDir/secondwsdl.wsdl"),
+        )
+    }
+    
 
 ### Options for xsd2java (deprecated, separate plugin coming soon)
 
