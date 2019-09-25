@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Configuration
+import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.OutputDirectory
@@ -17,6 +18,7 @@ import org.gradle.api.tasks.TaskExecutionException
 
 import groovy.io.FileType;
 
+@CacheableTask
 class Wsdl2JavaTask extends DefaultTask {
 	private static final NEWLINE = System.getProperty("line.separator");
     // user properties
