@@ -5,13 +5,12 @@ buildscript{
         }
         mavenCentral()
     }
-    dependencies {
-        classpath 'no.nils:wsdl2java:+'
-    }
 }
 
-apply plugin :'idea'
-apply plugin :'no.nils.wsdl2java'
+plugins {
+    id 'idea'
+    id 'no.nils.wsdl2java' version '0.10'
+}
 
 repositories{
     mavenCentral()

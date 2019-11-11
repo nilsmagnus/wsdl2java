@@ -1,0 +1,18 @@
+plugins {
+    id 'no.nils.wsdl2java' version '0.10'
+}
+
+repositories{
+    mavenCentral()
+}
+
+wsdl2java {
+    wsdlsToGenerate = [[file('src/main/resources/wsdl/stockqoute.wsdl')]]
+    generatedWsdlDir = file("generatedsources/wsdl2java")
+    wsdlDir = file("src/main/resources/wsdl")
+    ext.cxfVersion = "2.5.1"
+}
+
+sourceSets{
+    main.java.srcDirs +=[wsdl2java.generatedWsdlDir]
+}
