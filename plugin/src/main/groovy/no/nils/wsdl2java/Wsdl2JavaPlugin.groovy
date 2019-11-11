@@ -20,18 +20,17 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
         Configuration wsdl2javaConfiguration = project.configurations.maybeCreate(WSDL2JAVA)
 
         // add wsdl2java task with group and a description
-        project.task(WSDL2JAVA,
-                type: Wsdl2JavaTask,
-                group: 'Wsdl2Java',
-                description: 'Generate java source code from WSDL files.') {
+        project.tasks.register(WSDL2JAVA, Wsdl2JavaTask) {
+            group = 'Wsdl2Java'
+            description: 'Generate java source code from WSDL files.'
             classpath = wsdl2javaConfiguration
         }
 
 		// add cleanXsd task with group and a description
-		project.task(CLEAN,
-			type: CleanTask,
-			group: 'Wsdl2Java',
-			description: 'Delete java source code generated from WSDL and XSD files.')
+		project.tasks.register(CLEAN, CleanTask) {
+            group = 'Wsdl2Java'
+            description = 'Delete java source code generated from WSDL and XSD files.'
+        }
 
         project.afterEvaluate {
             def cxfVersion = ext.cxfVersion
