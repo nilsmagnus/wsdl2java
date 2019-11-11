@@ -44,6 +44,6 @@ class GradleVersionIT extends Specification {
         !new File(testProjectDir.root, 'generatedsources/wsdl2java').exists()
 
         where:
-        gradleVersion << ['4.9']
+        gradleVersion << ['4.9', '5.0', '5.6.4', '6.0']
     }
 }
