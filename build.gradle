@@ -1,5 +1,5 @@
 apply plugin: 'idea'
 
 wrapper {
-    gradleVersion = '4.9'
+    gradleVersion = '5.6.4'
 }
