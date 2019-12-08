@@ -34,7 +34,6 @@ This plugin uses the apache-cxf tools to do the actual work.
 | ---- | ----------- | --------- |
 | wsdl2java | Generate java source from wsdl-files | CompileJava depends on wsdl2java |
 | ~~xsd2java~~ | ~~Generate java source from xsd-files~~ Removed in version 0.8 | ~~CompileJava depends on xsd2java~~ |
-| deleteGeneratedSources | Delete all generated sources | Clean depends on deleteGeneratedSources |
 
 ## Usage
 
@@ -72,7 +71,6 @@ Kotlin:
 | Option | Default value | Description |
 | ------ | ------------- | ----------- |
 | cxfVersion | "+" | Controls the CXF version used to generate code.
-| deleteGeneratedSourcesOnClean | `false` | If you want to delete the generated sources when `clean` task is invoked, set this option to `true`. |
 
 
 Example of specifying another CXF version:
@@ -91,25 +89,10 @@ Kotlin:
         cxfVersion = "${property("cxfVersion")}"
     }
 
-Example of deleting the generated sources on clean:
-
-Groovy:
-
-    wsdl2javaExt {
-        deleteGeneratedSourcesOnClean = true
-    }
-
-Kotlin:
-
-    project.wsdl2javaExt {
-	    deleteGeneratedSourcesOnClean = true
-    }
-
 ### Options for wsdl2java
 
 | Option | Default value | Description |
 | ------ | ------------- | ----------- |
-| generatedWsdlDir | generatedsources/src/main/java | This is where you want the generated sources to be placed. |
 | wsdlDir | src/main/resources | Define the wsdl files directory to support incremental build. This means that the task will be up-to-date if nothing in this directory has changed. |
 | wsdlsToGenerate | empty | This is the main input to the plugin that defines the wsdls to process. It is a list of arguments where each argument is a list of arguments to process a wsdl-file. The Wsdl-file with full path is the last argument. The array can be supplied with the same options as described for the maven-cxf plugin(http://cxf.apache.org/docs/wsdl-to-java.html). |
 | locale | Locale.getDefault() | The locale for the generated sources – especially the JavaDoc. This might be necessary to prevent differing sources due to several development environments. |
@@ -120,7 +103,6 @@ Example setting of options:
 Groovy:
 
     wsdl2java {
-        generatedWsdlDir = file("my-generated-sources")  // target directory for generated source coude
         wsdlDir = file("src/main/resources/myWsdlFiles") // define to support incremental build
         wsdlsToGenerate = [   //  2d-array of wsdls and cxf-parameters
                     ['src/main/resources/wsdl/firstwsdl.wsdl'],
@@ -133,7 +115,6 @@ Kotlin:
 
     tasks.getByName<no.nils.wsdl2java.Wsdl2JavaTask>("wsdl2java") {
         wsdlDir = file("$projectDir/src/main/wsdl") // wslds location
-        generatedWsdlDir = file("$projectDir/src/main/generated-sources/") // store generates java classes to
         wsdlsToGenerate = arrayListOf(
             arrayListOf("$wsdlDir/firstwsdl.wsdl"),
             arrayListOf("-xjc", "-b", "bindingfile.xml", "$wsdlDir/secondwsdl.wsdl"),
@@ -190,7 +171,6 @@ This is a an example of a working build.gradle for a java project. You can also 
         wsdlsToGenerate = [
                 ['-p','com.acme.mypackage', '-autoNameResolution',"$projectDir/src/main/resources/wsdl/stockqoute.wsdl"]
         ]
-        generatedWsdlDir = file("$projectDir/generatedsources")
         wsdlDir = file("$projectDir/src/main/resources/wsdl")
         locale = Locale.FRANCE
     }
@@ -238,7 +218,6 @@ To use those extensions some more dependencies are necessary.
         wsdlsToGenerate = [
             ['-xjc-Xequals', '-xjc-XhashCode', 'src/main/resources/com/example/api/interface.wsdl']
         ]
-        generatedWsdlDir = file("$projectDir/generated")
     }
 
 This example creates the hashCode and the equals method.

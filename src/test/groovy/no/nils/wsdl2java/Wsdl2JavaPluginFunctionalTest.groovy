@@ -17,7 +17,7 @@ class Wsdl2JavaPluginFunctionalTest {
         def result = GradleRunner.create()
                 .withPluginClasspath()
                 .withProjectDir(projectDir)
-                .withArguments("clean", "wsdl2java")
+                .withArguments("clean", "wsdl2java", "--stacktrace")
                 .build()
 
         assertEquals(SUCCESS, result.task(":wsdl2java").getOutcome())
@@ -28,7 +28,7 @@ class Wsdl2JavaPluginFunctionalTest {
         def result = GradleRunner.create()
                 .withPluginClasspath()
                 .withProjectDir(projectDir)
-                .withArguments("clean", "build")
+                .withArguments("clean", "build", "--stacktrace")
                 .build()
 
         assertEquals(SUCCESS, result.task(":build").getOutcome())
@@ -39,7 +39,7 @@ class Wsdl2JavaPluginFunctionalTest {
         def result = GradleRunner.create()
                 .withPluginClasspath()
                 .withProjectDir(kotlinProjectDir)
-                .withArguments("clean", "build")
+                .withArguments("clean", "build", "--stacktrace")
                 .build()
 
         assertEquals(SUCCESS, result.task(":build").getOutcome())
@@ -53,7 +53,7 @@ class Wsdl2JavaPluginFunctionalTest {
         def result1 = GradleRunner.create()
                 .withPluginClasspath()
                 .withProjectDir(projectDir)
-                .withArguments("clean", "wsdl2java", "--build-cache")
+                .withArguments("clean", "wsdl2java", "--build-cache", "--stacktrace")
                 .build()
 
         assertEquals(SUCCESS, result1.task(":wsdl2java").getOutcome())
@@ -61,7 +61,7 @@ class Wsdl2JavaPluginFunctionalTest {
         def result2 = GradleRunner.create()
                 .withPluginClasspath()
                 .withProjectDir(projectDir)
-                .withArguments("clean", "wsdl2java", "--build-cache")
+                .withArguments("clean", "wsdl2java", "--build-cache", "--stacktrace")
                 .build()
 
         assertEquals(FROM_CACHE, result2.task(":wsdl2java").getOutcome())

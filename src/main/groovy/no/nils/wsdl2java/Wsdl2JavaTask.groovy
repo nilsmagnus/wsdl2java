@@ -9,7 +9,12 @@ import java.security.MessageDigest
 
 @CacheableTask
 class Wsdl2JavaTask extends DefaultTask {
+    static final DESTINATION_DIR = "build/generated/wsdl"
+
     private static final NEWLINE = System.getProperty("line.separator")
+
+    @OutputDirectory
+    File generatedWsdlDir = new File(DESTINATION_DIR)
 
     @InputFiles
     @Classpath
@@ -92,7 +97,7 @@ class Wsdl2JavaTask extends DefaultTask {
             packagePaths.add("") // add root if no package paths
         }
 
-        Set<File> packageTargetDirs = packagePaths.collect { subPath -> new File(extension.generatedWsdlDir, subPath) }
+        Set<File> packageTargetDirs = packagePaths.collect { subPath -> new File(generatedWsdlDir, subPath) }
         getLogger().info("Clear target folders {}", packageTargetDirs)
         getProject().delete(packageTargetDirs)
     }
@@ -118,7 +123,7 @@ class Wsdl2JavaTask extends DefaultTask {
 
         srcDir.eachFileRecurse(FileType.FILES) { file ->
             String relPath = file.getAbsolutePath().substring(srcPathLength)
-            File target = new File(extension.generatedWsdlDir, relPath)
+            File target = new File(generatedWsdlDir, relPath)
 
             switchToEncoding(file)
 
