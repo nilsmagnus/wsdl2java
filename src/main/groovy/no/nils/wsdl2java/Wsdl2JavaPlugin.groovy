@@ -9,15 +9,15 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
     public static final String WSDL2JAVA = "wsdl2java"
 
     private static final JAVA_9_DEPENDENCIES = [
-            'com.sun.xml.bind:jaxb-xjc:2.3.0.1',
-            'javax.xml.bind:jaxb-api:2.3.1',
-            'javax.xml.ws:jaxws-api:2.3.1',
-            'org.apache.cxf:cxf-rt-wsdl:3.2.7',
-            'javax.jws:javax.jws-api:1.1'
+            "javax.xml.bind:jaxb-api:2.3.1",
+            "javax.xml.ws:jaxws-api:2.3.1",
+            "org.glassfish.jaxb:jaxb-runtime:2.3.2",
+            "org.glassfish.main.javaee-api:javax.jws:3.1.2.2",
+            "com.sun.xml.messaging.saaj:saaj-impl:1.5.1"
     ]
 
     void apply(Project project) {
-        project.apply(plugin: 'java')
+        project.apply(plugin: "java")
 
         def extension = project.extensions.create(WSDL2JAVA, Wsdl2JavaPluginExtension.class)
         def cxfVersion = project.provider { extension.cxfVersion }
@@ -46,8 +46,8 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
                 }
             }
 
-            task.group = 'Wsdl2Java'
-            task.description = 'Generate java source code from WSDL files.'
+            task.group = "Wsdl2Java"
+            task.description = "Generate java source code from WSDL files."
             task.classpath = wsdl2javaConfiguration
             task.extension = extension
         }
