@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+    id 'no.nils.wsdl2java'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies() {
+    testImplementation 'junit:junit:4.12'
+}
+
+wsdl2java {
+    wsdlsToGenerate = [
+            [file('src/main/resources/wsdl/stockqoute.wsdl')]
+    ]
+    generatedWsdlDir = file("build/generatedsources/wsdl2java")
+    wsdlDir = file("src/main/resources/wsdl")
+    ext.cxfVersion = "2.5.1"
+}

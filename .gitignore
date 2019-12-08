@@ -15,6 +15,7 @@ build
 .gradle
 *~
 
+.idea
 *.iws
 *.ipr
 *.iml

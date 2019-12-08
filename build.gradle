@@ -1,5 +1,84 @@
-apply plugin: 'idea'
-
-task wrapper(type:Wrapper){
-    gradleVersion = '2.13'
+plugins {
+    id "groovy"
+    id "maven-publish"
+    id "java-gradle-plugin"
+    id "com.jfrog.bintray" version "1.8.4"
+    id 'idea'
+    id 'eclipse'
 }
+
+group = 'no.nils'
+version = '0.11-SNAPSHOT'
+
+// stay compatible with the crowd
+targetCompatibility = 1.6
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation localGroovy()
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation gradleTestKit()
+}
+
+java {
+    withSourcesJar()
+}
+
+gradlePlugin {
+    plugins {
+        wsdl2java {
+            id = 'no.nils.wsdl2java'
+            implementationClass = 'no.nils.wsdl2java.Wsdl2JavaPlugin'
+        }
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+bintray {
+    apiUrl = "https://api.bintray.com"
+    user = System.env.BINTRAY_USER
+    key = System.env.BINTRAY_API_KEY
+
+    publications = ['maven'] //When uploading Maven-based publication files
+    // - AND/OR -
+    dryRun = false //Whether to run this as dry-run, without deploying
+    publish = true //If version should be auto published after an upload
+    pkg {
+        repo = 'maven'
+        //userOrg = 'no.nils' //An optional organization name when the repo belongs to one of the user's orgs
+        name = 'wsdl2java'
+        desc = 'Gradle wsdl2java plugin'
+        websiteUrl = 'https://github.com/nilsmagnus/wsdl2java'
+        issueTrackerUrl = 'https://github.com/nilsmagnus/wsdl2java/issues'
+        vcsUrl = 'https://github.com/nilsmagnus/wsdl2java.git'
+        licenses = ['MIT']
+        labels = ['gradle', 'wsdl2java', 'plugin']
+        publicDownloadNumbers = true
+        //Optional version descriptor
+        version {
+            name = project.version //Bintray logical version name
+            desc = ''
+            //released  = '' //2 possible values: date in the format of 'yyyy-MM-dd'T'HH:mm:ss.SSSZZ' OR a java.util.Date instance
+            vcsTag = project.version
+            attributes = ['gradle-plugin': 'no.nils.wsdl2java:no.nils:wsdl2java']
+            //Optional version-level attributes
+        }
+    }
+}
+
+wrapper {
+    gradleVersion = '6.0.1'
+}
+
+build.doLast { uploadArchives }

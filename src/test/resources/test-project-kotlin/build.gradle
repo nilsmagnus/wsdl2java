@@ -1,0 +1,27 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.3.61'
+    id 'no.nils.wsdl2java'
+}
+
+sourceSets {
+    main.java.srcDirs += file("build/generatedsources/wsdl2java")
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies() {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.61"
+
+    testImplementation 'junit:junit:4.12'
+}
+
+wsdl2java {
+    wsdlsToGenerate = [
+            [file('src/main/resources/wsdl/stockqoute.wsdl')]
+    ]
+    generatedWsdlDir = file("build/generatedsources/wsdl2java")
+    wsdlDir = file("src/main/resources/wsdl")
+    ext.cxfVersion = "2.5.1"
+}

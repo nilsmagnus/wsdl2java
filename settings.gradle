@@ -1,1 +1,1 @@
-include 'plugin', 'consumer'
+rootProject.name = "wsdl2java"
