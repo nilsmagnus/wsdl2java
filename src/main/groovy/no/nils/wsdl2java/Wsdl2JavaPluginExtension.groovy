@@ -8,6 +8,16 @@ class Wsdl2JavaPluginExtension {
 
     private static final DEFAULT_WSDL_DIR = "src/main/resources/wsdl"
 
+    @InputDirectory
+    @PathSensitive(PathSensitivity.ABSOLUTE)
+    File wsdlDir = new File(DEFAULT_WSDL_DIR)
+
+    @Input
+    List<List<Object>> wsdlsToGenerate
+
+    @Input
+    Locale locale = Locale.getDefault()
+
     @Input
     String encoding = Charset.defaultCharset().name()
 
@@ -18,15 +28,5 @@ class Wsdl2JavaPluginExtension {
     boolean stabilizeAndMergeObjectFactory = false
 
     @Input
-    Locale locale = Locale.getDefault()
-
-    @Input
     String cxfVersion = "+"
-
-    @Input
-    List<List<Object>> wsdlsToGenerate
-
-    @InputDirectory
-    @PathSensitive(PathSensitivity.ABSOLUTE)
-    File wsdlDir = new File(DEFAULT_WSDL_DIR)
 }

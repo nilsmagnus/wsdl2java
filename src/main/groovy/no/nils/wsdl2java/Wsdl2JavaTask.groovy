@@ -40,14 +40,17 @@ class Wsdl2JavaTask extends DefaultTask {
         setupClassLoader()
         assert classLoader != null
         extension.wsdlsToGenerate.each { args ->
-            String wsdlPath = md5.digest(args[-1].toString().bytes).encodeHex().toString()
+            // Defensively copy the input args, because this might be a immutable implementation.
+            def argsCopy = args.collect() as List<Object>
+
+            String wsdlPath = md5.digest(argsCopy[-1].toString().bytes).encodeHex().toString()
             File targetDir = new File(tmpDir, wsdlPath)
 
-            args.add(args.size - 1, '-d')
-            args.add(args.size - 1, targetDir)
-            String[] wsdl2JavaArgs = new String[args.size()]
-            for (int i = 0; i < args.size(); i++)
-                wsdl2JavaArgs[i] = args[i]
+            argsCopy.add(argsCopy.size - 1, '-d')
+            argsCopy.add(argsCopy.size - 1, targetDir)
+            String[] wsdl2JavaArgs = new String[argsCopy.size()]
+            for (int i = 0; i < argsCopy.size(); i++)
+                wsdl2JavaArgs[i] = argsCopy[i]
 
             def wsdlToJava = classLoader.loadClass("org.apache.cxf.tools.wsdlto.WSDLToJava").getConstructor().newInstance()
             def toolContext = classLoader.loadClass("org.apache.cxf.tools.common.ToolContext").getConstructor().newInstance()
