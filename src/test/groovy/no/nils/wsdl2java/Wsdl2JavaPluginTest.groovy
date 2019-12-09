@@ -1,14 +1,14 @@
 package no.nils.wsdl2java
 
-import org.junit.Test
 import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
+import org.junit.jupiter.api.Test
 
-import static org.junit.Assert.assertTrue
+import static org.junit.jupiter.api.Assertions.assertTrue
 
-class Wsdl2JavaPluginTest{
+class Wsdl2JavaPluginTest {
 
-	@Test
+    @Test
     void canAddWsdlTaskToProject() {
         Project project = ProjectBuilder.builder().build()
         def task = project.task('wsdl2java', type: Wsdl2JavaTask)

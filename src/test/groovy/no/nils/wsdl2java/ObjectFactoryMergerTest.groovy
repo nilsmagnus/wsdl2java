@@ -1,14 +1,14 @@
 package no.nils.wsdl2java
 
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
-import static org.junit.Assert.assertEquals
+import static org.junit.jupiter.api.Assertions.assertEquals
 
 class ObjectFactoryMergerTest {
     File outputDir = new File("build/test")
 
-    @Before
+    @BeforeEach
     void cleanOutput() {
         outputDir.deleteDir()
         outputDir.mkdirs()
@@ -24,7 +24,7 @@ class ObjectFactoryMergerTest {
         ObjectFactoryMerger.merge(input, output, "UTF-8")
 
         File expected = new File(this.class.classLoader.getResource("objectfactorymerger/dokumentutil/ObjectFactory_sorted.java").toURI())
-        assertEquals("Sorting should be stable", expected.getText("UTF-8"), output.getText("UTF-8"))
+        assertEquals(expected.getText("UTF-8"), output.getText("UTF-8"), "Sorting should be stable")
     }
 
     @Test
@@ -37,6 +37,6 @@ class ObjectFactoryMergerTest {
         ObjectFactoryMerger.merge(input, output, "UTF-8")
 
         File expected = new File(this.class.classLoader.getResource("objectfactorymerger/autodesktopservice/ObjectFactory_sorted.java").toURI())
-        assertEquals("Sorting should be stable", expected.getText("UTF-8"), output.getText("UTF-8"))
+        assertEquals(expected.getText("UTF-8"), output.getText("UTF-8"), "Sorting should be stable")
     }
 }

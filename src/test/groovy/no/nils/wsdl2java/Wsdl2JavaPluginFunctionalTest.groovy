@@ -1,11 +1,11 @@
 package no.nils.wsdl2java
 
 import org.gradle.testkit.runner.GradleRunner
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 import static org.gradle.testkit.runner.TaskOutcome.FROM_CACHE
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
-import static org.junit.Assert.assertEquals
+import static org.junit.jupiter.api.Assertions.assertEquals
 
 class Wsdl2JavaPluginFunctionalTest {
 

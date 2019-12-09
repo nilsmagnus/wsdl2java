@@ -20,12 +20,18 @@ repositories {
 dependencies {
     implementation localGroovy()
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.2'
     testImplementation gradleTestKit()
+
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
 }
 
 java {
     withSourcesJar()
+}
+
+test {
+    useJUnitPlatform()
 }
 
 gradlePlugin {
