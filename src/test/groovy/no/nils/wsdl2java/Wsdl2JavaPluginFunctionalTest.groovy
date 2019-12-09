@@ -2,6 +2,8 @@ package no.nils.wsdl2java
 
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 import static org.gradle.testkit.runner.TaskOutcome.FROM_CACHE
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
@@ -39,6 +41,19 @@ class Wsdl2JavaPluginFunctionalTest {
         def result = GradleRunner.create()
                 .withPluginClasspath()
                 .withProjectDir(kotlinProjectDir)
+                .withArguments("clean", "build", "--stacktrace")
+                .build()
+
+        assertEquals(SUCCESS, result.task(":build").getOutcome())
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @ValueSource(strings = ["5.6.4", "4.10.3"])
+    void worksWithOlderGradleVersions(String version) {
+        def result = GradleRunner.create()
+                .withPluginClasspath()
+                .withProjectDir(projectDir)
+                .withGradleVersion(version)
                 .withArguments("clean", "build", "--stacktrace")
                 .build()
 

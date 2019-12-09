@@ -33,16 +33,16 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
 
         def wsdl2JavaTask = project.tasks.register(WSDL2JAVA, Wsdl2JavaTask.class) { task ->
             // Add new configuration for our plugin and add required dependencies to it.
-            def wsdl2javaConfiguration = project.configurations.maybeCreate(WSDL2JAVA).tap {
-                it.defaultDependencies {
-                    it.add(project.dependencies.create("org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:${cxfVersion.get()}"))
-                    it.add(project.dependencies.create("org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:${cxfVersion.get()}"))
-                    it.add(project.dependencies.create("org.apache.cxf.xjcplugins:cxf-xjc-ts:${cxfVersion.get()}"))
-                    it.add(project.dependencies.create("org.apache.cxf.xjcplugins:cxf-xjc-boolean:${cxfVersion.get()}"))
+            def wsdl2javaConfiguration = project.configurations.maybeCreate(WSDL2JAVA)
 
-                    if (JavaVersion.current().isJava9Compatible()) {
-                        JAVA_9_DEPENDENCIES.each { dep -> it.add(project.dependencies.create(dep)) }
-                    }
+            wsdl2javaConfiguration.defaultDependencies {
+                it.add(project.dependencies.create("org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:${cxfVersion.get()}"))
+                it.add(project.dependencies.create("org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:${cxfVersion.get()}"))
+                it.add(project.dependencies.create("org.apache.cxf.xjcplugins:cxf-xjc-ts:${cxfVersion.get()}"))
+                it.add(project.dependencies.create("org.apache.cxf.xjcplugins:cxf-xjc-boolean:${cxfVersion.get()}"))
+
+                if (JavaVersion.current().isJava9Compatible()) {
+                    JAVA_9_DEPENDENCIES.each { dep -> it.add(project.dependencies.create(dep)) }
                 }
             }
 
