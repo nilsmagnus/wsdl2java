@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+    id 'no.nils.wsdl2java'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+wsdl2java {
+    wsdlsToGenerate = [
+            [file('src/main/resources/wsdl/stockqoute.wsdl')]
+    ]
+}
