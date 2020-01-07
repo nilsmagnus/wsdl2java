@@ -23,6 +23,7 @@ Contributions are welcome as long as they are sane.
 - Steffen Döring, https://github.com/s-doering
 - Jesper Skov, https://github.com/jskovjyskebankdk
 - Manuel Sanches Ortiz, https://github.com/manuelsanchezortiz
+- Ruben Gees, https://github.com/rubengees
 
 ### CXF
 This plugin uses the apache-cxf tools to do the actual work.
