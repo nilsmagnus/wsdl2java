@@ -53,7 +53,7 @@ buildscript{
         mavenCentral()
     }
     dependencies {
-        classpath 'no.nils:wsdl2java:0.10'
+        classpath 'no.nils:wsdl2java:0.11'
     }
 }
 
@@ -65,7 +65,7 @@ Kotlin:
 ```kotlin
 plugins {
     id("java")
-    id("no.nils.wsdl2java") version "0.10"
+    id("no.nils.wsdl2java") version "0.11"
 }
 ```
 
@@ -142,7 +142,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'no.nils:wsdl2java:0.10'
+        classpath 'no.nils:wsdl2java:0.11'
     }
 }
 
