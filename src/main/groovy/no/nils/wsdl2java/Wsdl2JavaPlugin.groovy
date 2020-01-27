@@ -21,11 +21,13 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
 
         def extension = project.extensions.create(WSDL2JAVA, Wsdl2JavaPluginExtension.class)
         def cxfVersion = project.provider { extension.cxfVersion }
+
+        // Add new configuration for our plugin and add required dependencies to it later.
         def wsdl2javaConfiguration = project.configurations.maybeCreate(WSDL2JAVA)
 
         // Get compile configuration and add Java 9+ dependencies if required.
         project.configurations.named("compile").configure {
-            it.defaultDependencies {
+            it.withDependencies {
                 if (JavaVersion.current().isJava9Compatible()) {
                     JAVA_9_DEPENDENCIES.each { dep -> it.add(project.dependencies.create(dep)) }
                 }
@@ -33,8 +35,6 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
         }
 
         def wsdl2JavaTask = project.tasks.register(WSDL2JAVA, Wsdl2JavaTask.class) { task ->
-            // Add new configuration for our plugin and add required dependencies to it.
-
             wsdl2javaConfiguration.withDependencies {
                 it.add(project.dependencies.create("org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:${cxfVersion.get()}"))
                 it.add(project.dependencies.create("org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:${cxfVersion.get()}"))
