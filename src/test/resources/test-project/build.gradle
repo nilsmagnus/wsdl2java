@@ -10,6 +10,11 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
+        // enable extension support for wsdl2java
+    wsdl2java 'org.jvnet.jaxb2_commons:jaxb2-basics-runtime:0.11.0'
+    wsdl2java 'org.jvnet.jaxb2_commons:jaxb2-basics:0.11.0'
+    implementation 'org.jvnet.jaxb2_commons:jaxb2-basics-runtime:0.11.0'
+    implementation 'org.jvnet.jaxb2_commons:jaxb2-basics:0.11.0'
 }
 
 test {
@@ -18,6 +23,6 @@ test {
 
 wsdl2java {
     wsdlsToGenerate = [
-            [file('src/main/resources/wsdl/stockqoute.wsdl')]
+            ['-xjc-Xequals', '-xjc-XhashCode', file('src/main/resources/wsdl/stockqoute.wsdl')]
     ]
 }
