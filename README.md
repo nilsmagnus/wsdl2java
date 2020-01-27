@@ -3,7 +3,7 @@ wsdl2java gradle plugin
 
 [![Known Vulnerabilities](https://snyk.io/test/github/nilsmagnus/wsdl2java/badge.svg?targetFile=build.gradle)](https://snyk.io/test/github/nilsmagnus/wsdl2java?targetFile=build.gradle)
 [![Build Status](https://cloud.drone.io/api/badges/nilsmagnus/wsdl2java/status.svg)](https://cloud.drone.io/nilsmagnus/wsdl2java)
-[ ![Download](https://api.bintray.com/packages/nilsmagnus/maven/wsdl2java/images/download.svg?version=0.11) ](https://bintray.com/nilsmagnus/maven/wsdl2java/0.11/link)
+[ ![Download](https://api.bintray.com/packages/nilsmagnus/maven/wsdl2java/images/download.svg?version=0.12) ](https://bintray.com/nilsmagnus/maven/wsdl2java/0.12/link)
 
 Gradle plugin for generating java from wsdl, using cxf under the hood and the same options as the maven wsdl-2-java plugin from apache-cxf.
 
@@ -54,7 +54,7 @@ buildscript{
         mavenCentral()
     }
     dependencies {
-        classpath 'no.nils:wsdl2java:0.11'
+        classpath 'no.nils:wsdl2java:0.12'
     }
 }
 
@@ -66,7 +66,7 @@ Kotlin:
 ```kotlin
 plugins {
     id("java")
-    id("no.nils.wsdl2java") version "0.11"
+    id("no.nils.wsdl2java") version "0.12"
 }
 ```
 
@@ -143,7 +143,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'no.nils:wsdl2java:0.11'
+        classpath 'no.nils:wsdl2java:0.12'
     }
 }
 
