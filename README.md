@@ -208,3 +208,17 @@ This example creates the hashCode and the equals method.
 ### A notice on multi-module projects
 
 Instead of referring to absolute paths in your build-file, try using $projectDir as a prefix to your files and directories. As shown in the "Complete example usage".
+
+
+# Releasing
+
+* set version to final in build.gradle & commit
+
+* build artifact and upload
+
+    export BINTRAY_USER=<bintrayuser>
+    export BINTRAY_API_KEY=<apikey>
+    ./gradlew clean bintrayPublish bintrayUpload
+	
+* increment version and set to SNAPSHOT & commit
+* git push
