@@ -8,7 +8,7 @@ plugins {
 }
 
 group = 'no.nils'
-version = '0.12'
+version = '0.13-SNAPSHOT'
 
 // stay compatible with the crowd
 sourceCompatibility = JavaVersion.VERSION_1_6
