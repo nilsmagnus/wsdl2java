@@ -80,6 +80,7 @@ plugins {
 | encoding | platform default encoding | Set the encoding name for generated sources, such as EUC-JP or UTF-8. |
 | stabilizeAndMergeObjectFactory| false | If multiple WSDLs target the same package, merge their `ObjectFactory` classes. |
 | cxfVersion | "+" | Controls the CXF version used to generate code. |
+| cxfPluginVersion | "+" | Controls the CXF XJC-plugins version used to generate code. |
 
 Example setting of options:
 
@@ -94,6 +95,7 @@ wsdl2java {
     ]
     locale = Locale.GERMANY
     cxfVersion = "2.5.1"
+    cxfPluginVersion = "2.4.0"
 }
 ```
     
@@ -101,6 +103,7 @@ Kotlin:
 
 ```kotlin
 extra["cxfVersion"] = "3.3.2"
+extra["cxfPluginVersion"] = "3.2.2"
 
 wsdl2java {
     wsdlDir = file("$projectDir/src/main/wsdl")
@@ -165,6 +168,7 @@ wsdl2java {
     wsdlDir = file("$projectDir/src/main/resources/wsdl")
     locale = Locale.FRANCE
     cxfVersion = "2.5.1"
+    cxfPluginVersion = "2.4.0"
 }
 ```
 
