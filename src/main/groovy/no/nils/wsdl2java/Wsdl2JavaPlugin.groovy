@@ -21,6 +21,7 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
 
         def extension = project.extensions.create(WSDL2JAVA, Wsdl2JavaPluginExtension.class)
         def cxfVersion = project.provider { extension.cxfVersion }
+        def cxfPluginVersion = project.provider { extension.cxfPluginVersion }
 
         // Add new configuration for our plugin and add required dependencies to it later.
         def wsdl2javaConfiguration = project.configurations.maybeCreate(WSDL2JAVA)
@@ -38,8 +39,12 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
             wsdl2javaConfiguration.withDependencies {
                 it.add(project.dependencies.create("org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:${cxfVersion.get()}"))
                 it.add(project.dependencies.create("org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:${cxfVersion.get()}"))
-                it.add(project.dependencies.create("org.apache.cxf.xjcplugins:cxf-xjc-ts:${cxfVersion.get()}"))
-                it.add(project.dependencies.create("org.apache.cxf.xjcplugins:cxf-xjc-boolean:${cxfVersion.get()}"))
+                if (project.wsdl2java.wsdlsToGenerate.any { it.contains('-xjc-Xts') }) {
+                    it.add(project.dependencies.create("org.apache.cxf.xjcplugins:cxf-xjc-ts:${cxfPluginVersion.get()}"))
+                }
+                if (project.wsdl2java.wsdlsToGenerate.any { it.contains('-xjc-Xbg') }) {
+                    it.add(project.dependencies.create("org.apache.cxf.xjcplugins:cxf-xjc-boolean:${cxfPluginVersion.get()}"))
+                }
 
                 if (JavaVersion.current().isJava9Compatible()) {
                     JAVA_9_DEPENDENCIES.each { dep -> it.add(project.dependencies.create(dep)) }

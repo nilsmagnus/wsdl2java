@@ -29,4 +29,8 @@ class Wsdl2JavaPluginExtension {
 
     @Input
     String cxfVersion = "+"
+
+    @Input
+    String cxfPluginVersion = "+"
+
 }
