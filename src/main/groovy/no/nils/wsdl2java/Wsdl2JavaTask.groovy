@@ -252,7 +252,7 @@ class Wsdl2JavaTask extends DefaultTask {
     }
 
     private stabilizeObjFacWithTarget(File src, File target) {
-        if (isObjectFactory(src) && src.getText(extension.encoding) != target.getText(encoding)) {
+        if (isObjectFactory(src) && src.getText(extension.encoding) != target.getText(extension.encoding)) {
             getLogger().info(" merge     ${target}")
             ObjectFactoryMerger.merge(src, target, extension.encoding)
         }
