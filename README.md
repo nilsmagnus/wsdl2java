@@ -1,3 +1,7 @@
+### Deprecation notice
+
+This plugin is no longer maintained by its creator since I dont have any interest in using this plugin anymore and find no pleasure in maintaining it for free/fun. Please fork it and use it as you like. The plugin is not published to any relevant plugin-portals. 
+
 wsdl2java gradle plugin
 =========
 
