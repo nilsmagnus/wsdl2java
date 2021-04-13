@@ -27,7 +27,7 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
         def wsdl2javaConfiguration = project.configurations.maybeCreate(WSDL2JAVA)
 
         // Get compile configuration and add Java 9+ dependencies if required.
-        project.configurations.named("compile").configure {
+        project.configurations.named("implementation").configure {
             it.withDependencies {
                 if (JavaVersion.current().isJava9Compatible()) {
                     JAVA_9_DEPENDENCIES.each { dep -> it.add(project.dependencies.create(dep)) }
