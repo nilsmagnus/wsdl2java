@@ -1,4 +1,4 @@
-package no.nils.wsdl2java;
+package com.yupzip.wsdl2java;
 
 /**
  * Takes one or more ObjectFactory java files and merge them, sorting the lines in the process.

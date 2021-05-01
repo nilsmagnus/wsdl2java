@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'no.nils.wsdl2java'
+    id 'com.yupzip.wsdl2java'
 }
 
 repositories {

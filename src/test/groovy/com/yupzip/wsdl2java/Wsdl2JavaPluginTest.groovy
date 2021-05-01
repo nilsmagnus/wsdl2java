@@ -1,4 +1,4 @@
-package no.nils.wsdl2java
+package com.yupzip.wsdl2java
 
 import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder

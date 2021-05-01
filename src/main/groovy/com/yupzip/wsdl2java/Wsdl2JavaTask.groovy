@@ -1,4 +1,4 @@
-package no.nils.wsdl2java
+package com.yupzip.wsdl2java
 
 import groovy.io.FileType
 import org.gradle.api.DefaultTask

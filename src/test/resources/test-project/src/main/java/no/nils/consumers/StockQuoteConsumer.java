@@ -1,4 +1,4 @@
-package no.nils.consumers;
+package com.yupzip.consumers;
 
 import net.webservicex.GetQuote;
 

@@ -1,4 +1,4 @@
-package no.nils.consumers;
+package com.yupzip.consumers;
 
 import org.junit.jupiter.api.Test;
 

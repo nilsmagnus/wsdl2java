@@ -1,35 +1,19 @@
 ### Deprecation notice
 
-This plugin is no longer maintained by its creator since I dont have any interest in using this plugin anymore and find no pleasure in maintaining it for free/fun. Please fork it and use it as you like. The plugin is not published to any relevant plugin-portals. 
+This plugin is forked from deprecated nilsmagnus/wsdl2java. Version 1.0 only includes a small update to make the plugin compatible with Gradle 7+. 
 
 wsdl2java gradle plugin
 =========
-
-[![Known Vulnerabilities](https://snyk.io/test/github/nilsmagnus/wsdl2java/badge.svg?targetFile=build.gradle)](https://snyk.io/test/github/nilsmagnus/wsdl2java?targetFile=build.gradle)
-[![Build Status](https://cloud.drone.io/api/badges/nilsmagnus/wsdl2java/status.svg)](https://cloud.drone.io/nilsmagnus/wsdl2java)
-[ ![Download](https://api.bintray.com/packages/nilsmagnus/maven/wsdl2java/images/download.svg?version=0.12) ](https://bintray.com/nilsmagnus/maven/wsdl2java/0.12/link)
-
 Gradle plugin for generating java from wsdl, using cxf under the hood and the same options as the maven wsdl-2-java plugin from apache-cxf.
 
-The plugin binaries are downloadable from bintray: https://bintray.com/nilsmagnus/maven/wsdl2java/
-
 ### Issues
-If you have any issues with the plugin, please file an issue at github, https://github.com/nilsmagnus/wsdl2java/issues
+If you have any issues with the plugin, please file an issue at github, https://github.com/yupzip/wsdl2java/issues
 
 ### Contribution
 Contributions are welcome as long as they are sane.
 
 #### Contributors
-- Nils Larsgård , https://github.com/nilsmagnus
-- Mats Faugli, https://github.com/fowlie
-- Thorben Schiller, https://github.com/thorbolo
-- Stefan Kloe, https://github.com/Pentadrago
-- Mattias Rundgren, https://github.com/matrun
-- Steffen Döring, https://github.com/s-doering
-- Jesper Skov, https://github.com/jskovjyskebankdk
-- Manuel Sanches Ortiz, https://github.com/manuelsanchezortiz
-- Ruben Gees, https://github.com/rubengees
-- Stefan Krause-Kjær, https://github.com/KrauseStefan
+- Peter Vermes , https://github.com/yupzip
 
 ### CXF
 This plugin uses the apache-cxf tools to do the actual work.
@@ -39,7 +23,6 @@ This plugin uses the apache-cxf tools to do the actual work.
 | Name | Description | Dependecy |
 | ---- | ----------- | --------- |
 | wsdl2java | Generate java source from wsdl-files | CompileJava/CompileKotlin depends on wsdl2java |
-| ~~xsd2java~~ | ~~Generate java source from xsd-files~~ Removed in version 0.8 | ~~CompileJava depends on xsd2java~~ |
 
 ## Usage
 
@@ -53,17 +36,10 @@ To use this plugin, you must
 Groovy:
 
 ```groovy
-buildscript{
-    repositories{
-        jcenter()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'no.nils:wsdl2java:0.12'
-    }
+plugins {
+  id 'java'
+  classpath 'com.yupzip:wsdl2java:1.0'
 }
-
-apply plugin: 'no.nils.wsdl2java'
 ```
 
 Kotlin:
@@ -71,7 +47,7 @@ Kotlin:
 ```kotlin
 plugins {
     id("java")
-    id("no.nils.wsdl2java") version "0.12"
+    id("com.yupzip.wsdl2java") version "1.0"
 }
 ```
 
@@ -135,7 +111,7 @@ Example setting of options:
 xsd2java {
     encoding = 'utf-8'
     xsdsToGenerate = [
-        ["src/main/resources/xsd/CustomersAndOrders.xsd", 'no.nils.xsd2java.sample', [header: false] /* optional map */]
+        ["src/main/resources/xsd/CustomersAndOrders.xsd", 'com.yupzip.xsd2java.sample', [header: false] /* optional map */]
     ]
     generatedXsdDir = file("generatedsources/xsd2java")
 }
@@ -145,18 +121,10 @@ xsd2java {
 This is a an example of a working build.gradle for a java project. You can also take a look at the test resources, which contain two working projects.
 
 ```groovy
-buildscript {
-    repositories {
-        jcenter()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'no.nils:wsdl2java:0.12'
-    }
+plugins {
+  id 'java'
+  classpath 'com.yupzip:wsdl2java:1.0'
 }
-
-apply plugin: 'java'
-apply plugin: 'no.nils.wsdl2java'
 
 repositories {
     mavenCentral()
@@ -184,10 +152,10 @@ This plugin automatically adds the necessary dependencies to work on Java 9+ whe
 As of now, these dependencies are added:
 
 ```groovy
-implementation "javax.xml.bind:jaxb-api:2.3.1",
-implementation "javax.xml.ws:jaxws-api:2.3.1",
-implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2",
-implementation "org.glassfish.main.javaee-api:javax.jws:3.1.2.2",
+implementation "javax.xml.bind:jaxb-api:2.3.1"
+implementation "javax.xml.ws:jaxws-api:2.3.1"
+implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
+implementation "org.glassfish.main.javaee-api:javax.jws:3.1.2.2"
 implementation "com.sun.xml.messaging.saaj:saaj-impl:1.5.1"
 ```
 
