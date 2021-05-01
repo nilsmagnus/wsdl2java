@@ -43,6 +43,8 @@ gradlePlugin {
         wsdl2java {
             id = 'com.yupzip.wsdl2java'
             implementationClass = 'com.yupzip.wsdl2java.Wsdl2JavaPlugin'
+            displayName = 'com.yupzip.wsdl2java'
+            description = 'Generate java code form wsdl/xsd with cxf'
         }
     }
 }
