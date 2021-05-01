@@ -1,4 +1,4 @@
-### Deprecation notice
+### Note
 
 This plugin is forked from deprecated nilsmagnus/wsdl2java. Version 1.0 only includes a small update to make the plugin compatible with Gradle 7+. 
 
