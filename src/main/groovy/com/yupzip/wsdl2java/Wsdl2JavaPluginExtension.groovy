@@ -33,4 +33,7 @@ class Wsdl2JavaPluginExtension {
     @Input
     String cxfPluginVersion = "+"
 
+    @Input
+    String generatedWsdlDir = "build/generated/wsdl"
+
 }

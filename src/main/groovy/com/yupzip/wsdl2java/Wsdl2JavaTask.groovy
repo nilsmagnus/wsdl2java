@@ -9,12 +9,11 @@ import java.security.MessageDigest
 
 @CacheableTask
 class Wsdl2JavaTask extends DefaultTask {
-    static final DESTINATION_DIR = "build/generated/wsdl"
 
     private static final NEWLINE = System.getProperty("line.separator")
 
     @OutputDirectory
-    File generatedWsdlDir = new File(DESTINATION_DIR)
+    File generatedWsdlDir = new File( "build/generated/wsdl")
 
     @InputFiles
     @Classpath
@@ -28,6 +27,7 @@ class Wsdl2JavaTask extends DefaultTask {
 
     @TaskAction
     def wsdl2java() {
+        generatedWsdlDir = new File(extension.generatedWsdlDir)
         deleteOutputFolders()
         MessageDigest md5 = MessageDigest.getInstance("MD5")
 

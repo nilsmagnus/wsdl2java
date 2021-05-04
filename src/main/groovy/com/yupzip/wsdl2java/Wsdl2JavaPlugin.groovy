@@ -74,7 +74,7 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
         }
 
         project.sourceSets {
-            main.java.srcDirs += Wsdl2JavaTask.DESTINATION_DIR
+            main.java.srcDirs += extension.generatedWsdlDir
         }
     }
 

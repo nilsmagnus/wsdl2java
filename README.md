@@ -38,7 +38,7 @@ Groovy:
 ```groovy
 plugins {
   id 'java'
-  classpath 'com.yupzip:wsdl2java:1.0'
+  classpath 'com.yupzip:wsdl2java:2.0'
 }
 ```
 
@@ -47,7 +47,7 @@ Kotlin:
 ```kotlin
 plugins {
     id("java")
-    id("com.yupzip.wsdl2java") version "1.0"
+    id("com.yupzip.wsdl2java") version "2.0"
 }
 ```
 
@@ -123,7 +123,7 @@ This is a an example of a working build.gradle for a java project. You can also 
 ```groovy
 plugins {
   id 'java'
-  classpath 'com.yupzip:wsdl2java:1.0'
+  classpath 'com.yupzip:wsdl2java:2.0'
 }
 
 repositories {
