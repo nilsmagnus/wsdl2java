@@ -1,6 +1,6 @@
 ### Note
 
-This plugin is forked from deprecated nilsmagnus/wsdl2java. Version 1.0 only includes a small update to make the plugin compatible with Gradle 7+. 
+This plugin is forked from deprecated nilsmagnus/wsdl2java. Version 2.0 only includes a small update to make the plugin compatible with Gradle 7+. 
 
 wsdl2java gradle plugin
 =========
@@ -166,7 +166,7 @@ To use those extensions some more dependencies are necessary.
 
 ```groovy
 dependencies() {
-    compile 'org.jvnet.jaxb2_commons:jaxb2-basics-runtime:0.11.0'
+    implementation 'org.jvnet.jaxb2_commons:jaxb2-basics-runtime:0.11.0'
 
     // enable extension support for wsdl2java
     wsdl2java 'org.jvnet.jaxb2_commons:jaxb2-basics-runtime:0.11.0'
@@ -185,17 +185,3 @@ This example creates the hashCode and the equals method.
 ### A notice on multi-module projects
 
 Instead of referring to absolute paths in your build-file, try using $projectDir as a prefix to your files and directories. As shown in the "Complete example usage".
-
-
-# Releasing
-
-* set version to final in build.gradle & commit
-
-* build artifact and upload
-
-    export BINTRAY_USER=<bintrayuser>
-    export BINTRAY_API_KEY=<apikey>
-    ./gradlew clean bintrayPublish bintrayUpload
-	
-* increment version and set to SNAPSHOT & commit
-* git push
