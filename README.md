@@ -22,7 +22,7 @@ This plugin uses the apache-cxf tools to do the actual work.
 
 | Name | Description | Dependecy |
 | ---- | ----------- | --------- |
-| wsdl2java | Generate java source from wsdl-files | CompileJava/CompileKotlin depends on wsdl2java |
+| wsdl2javaTask | Generate java source from wsdl-files | CompileJava/CompileKotlin depends on wsdl2java |
 
 ## Usage
 

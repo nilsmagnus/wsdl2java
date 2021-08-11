@@ -7,6 +7,7 @@ import org.gradle.api.Task
 
 class Wsdl2JavaPlugin implements Plugin<Project> {
     public static final String WSDL2JAVA = "wsdl2java"
+    public static final String WSDL2JAVA_TASK = "wsdl2javaTask"
 
     private static final JAVA_9_DEPENDENCIES = [
             "javax.xml.bind:jaxb-api:2.3.1",
@@ -35,7 +36,7 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
             }
         }
 
-        def wsdl2JavaTask = project.tasks.register(WSDL2JAVA, Wsdl2JavaTask.class) { task ->
+        def wsdl2JavaTask = project.tasks.register(WSDL2JAVA_TASK, Wsdl2JavaTask.class) { task ->
             wsdl2javaConfiguration.withDependencies {
                 it.add(project.dependencies.create("org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:${cxfVersion.get()}"))
                 it.add(project.dependencies.create("org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:${cxfVersion.get()}"))
