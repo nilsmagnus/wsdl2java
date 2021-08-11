@@ -62,14 +62,8 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
             it.dependsOn wsdl2JavaTask
         }
 
-        project.pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
-            project.tasks.withType(getTaskClass("org.jetbrains.kotlin.gradle.tasks.KotlinCompile")).configureEach {
-                it.dependsOn wsdl2JavaTask
-            }
-        }
-
-        project.pluginManager.withPlugin("org.jetbrains.kotlin.kapt") {
-            project.tasks.withType(getTaskClass("org.jetbrains.kotlin.gradle.internal.KaptGenerateStubsTask")).configureEach {
+        if (project.tasks.findByName("compileKotlin") != null) {
+            project.tasks.named("compileKotlin").configure {
                 it.dependsOn wsdl2JavaTask
             }
         }
