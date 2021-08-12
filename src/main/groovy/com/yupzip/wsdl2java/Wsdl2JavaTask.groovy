@@ -12,9 +12,6 @@ class Wsdl2JavaTask extends DefaultTask {
 
     private static final NEWLINE = System.getProperty("line.separator")
 
-    @OutputDirectory
-    File generatedWsdlDir = new File( "build/generated/wsdl")
-
     @InputFiles
     @Classpath
     Configuration classpath
@@ -25,9 +22,17 @@ class Wsdl2JavaTask extends DefaultTask {
     @Nested
     Wsdl2JavaPluginExtension extension
 
+    @Internal
+    File generatedWsdlDir
+
+    @OutputDirectory
+    File getGeneratedWsdlFile() {
+        return new File(extension != null ? extension.generatedWsdlDir : "build/generated/wsdl")
+    }
+
     @TaskAction
     def wsdl2java() {
-        generatedWsdlDir = new File(extension.generatedWsdlDir)
+        generatedWsdlDir = getGeneratedWsdlFile()
         deleteOutputFolders()
         MessageDigest md5 = MessageDigest.getInstance("MD5")
 
