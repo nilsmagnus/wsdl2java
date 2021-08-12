@@ -1,6 +1,6 @@
 ### Note
 
-This plugin is forked from deprecated nilsmagnus/wsdl2java. Version 2.1 only includes a small update to make the plugin compatible with Gradle 7+. 
+This plugin is forked from deprecated nilsmagnus/wsdl2java. Version 2.11 only includes a small update to make the plugin compatible with Gradle 7+. 
 
 wsdl2java gradle plugin
 =========
@@ -39,7 +39,7 @@ Groovy:
 ```groovy
 plugins {
   id 'java'
-  classpath 'com.yupzip:wsdl2java:2.1'
+  classpath 'com.yupzip:wsdl2java:2.11'
 }
 ```
 
@@ -48,7 +48,7 @@ Kotlin:
 ```kotlin
 plugins {
     id("java")
-    id("com.yupzip.wsdl2java") version "2.1"
+    id("com.yupzip.wsdl2java") version "2.11"
 }
 ```
 
@@ -124,7 +124,7 @@ This is a an example of a working build.gradle for a java project. You can also 
 ```groovy
 plugins {
   id 'java'
-  classpath 'com.yupzip:wsdl2java:2.1'
+  classpath 'com.yupzip:wsdl2java:2.11'
 }
 
 repositories {

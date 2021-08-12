@@ -8,7 +8,7 @@ plugins {
 }
 
 group = 'com.yupzip'
-version = '2.1'
+version = '2.11'
 
 // stay compatible with the crowd
 sourceCompatibility = JavaVersion.VERSION_1_6
