@@ -72,8 +72,4 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
             main.java.srcDirs += extension.generatedWsdlDir
         }
     }
-
-    static Class<Task> getTaskClass(name) {
-        return Class.forName(name) as Class<Task>
-    }
 }
