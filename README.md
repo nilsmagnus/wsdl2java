@@ -64,6 +64,7 @@ plugins {
 | stabilizeAndMergeObjectFactory| false | If multiple WSDLs target the same package, merge their `ObjectFactory` classes. |
 | cxfVersion | "+" | Controls the CXF version used to generate code. |
 | cxfPluginVersion | "+" | Controls the CXF XJC-plugins version used to generate code. |
+| includeJava8XmlDependencies | true | If on Java 9 or later this flag includes xml libraries that were previously included with the JRE. Set to false if you use recent versions of Java and the Jakarta xml implementations. |
 
 Example setting of options:
 
