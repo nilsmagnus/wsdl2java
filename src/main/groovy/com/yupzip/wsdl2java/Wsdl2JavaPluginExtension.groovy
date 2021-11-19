@@ -36,4 +36,7 @@ class Wsdl2JavaPluginExtension {
     @Input
     String generatedWsdlDir = "build/generated/wsdl"
 
+    @Input
+    boolean includeJava8XmlDependencies = true;
+
 }
