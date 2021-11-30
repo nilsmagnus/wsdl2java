@@ -30,7 +30,7 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
         // Get implementation configuration and add Java 9+ dependencies if required.
         project.configurations.named("implementation").configure {
             it.withDependencies {
-                if (JavaVersion.current().isJava9Compatible()) {
+                if (JavaVersion.current().isJava9Compatible() && extension.includeJava8XmlDependencies) {
                     JAVA_9_DEPENDENCIES.each { dep -> it.add(project.dependencies.create(dep)) }
                 }
             }
@@ -47,7 +47,7 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
                     it.add(project.dependencies.create("org.apache.cxf.xjcplugins:cxf-xjc-boolean:${cxfPluginVersion.get()}"))
                 }
 
-                if (JavaVersion.current().isJava9Compatible()) {
+                if (JavaVersion.current().isJava9Compatible() && extension.includeJava8XmlDependencies) {
                     JAVA_9_DEPENDENCIES.each { dep -> it.add(project.dependencies.create(dep)) }
                 }
             }
