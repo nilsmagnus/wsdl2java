@@ -2,24 +2,27 @@ plugins {
     id "groovy"
     id "maven-publish"
     id "java-gradle-plugin"
-    id "com.jfrog.bintray" version "1.8.4"
     id 'idea'
     id 'eclipse'
+    id 'maven'
 }
 
 group = 'no.nils'
-version = '0.13-SNAPSHOT'
+version = '0.13-TRAVELC.16'
 
 // stay compatible with the crowd
-sourceCompatibility = JavaVersion.VERSION_1_6
-targetCompatibility = JavaVersion.VERSION_1_6
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
-    jcenter()
+    maven {
+        url "https://jitpack.io"
+    }
 }
 
 dependencies {
     implementation localGroovy()
+    implementation("com.github.ertugrulcetin:CommentRemover:1.2")
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.5.2'
@@ -32,6 +35,7 @@ dependencies {
 
 java {
     withSourcesJar()
+    withJavadocJar()
 }
 
 test {
@@ -55,40 +59,18 @@ publishing {
     }
 }
 
-bintray {
-    apiUrl = "https://api.bintray.com"
-    user = System.env.BINTRAY_USER
-    key = System.env.BINTRAY_API_KEY
-
-    publications = ['maven'] //When uploading Maven-based publication files
-    // - AND/OR -
-    dryRun = false //Whether to run this as dry-run, without deploying
-    publish = true //If version should be auto published after an upload
-    pkg {
-        repo = 'maven'
-        //userOrg = 'no.nils' //An optional organization name when the repo belongs to one of the user's orgs
-        name = 'wsdl2java'
-        desc = 'Gradle wsdl2java plugin'
-        websiteUrl = 'https://github.com/nilsmagnus/wsdl2java'
-        issueTrackerUrl = 'https://github.com/nilsmagnus/wsdl2java/issues'
-        vcsUrl = 'https://github.com/nilsmagnus/wsdl2java.git'
-        licenses = ['MIT']
-        labels = ['gradle', 'wsdl2java', 'plugin']
-        publicDownloadNumbers = true
-        //Optional version descriptor
-        version {
-            name = project.version //Bintray logical version name
-            desc = ''
-            //released  = '' //2 possible values: date in the format of 'yyyy-MM-dd'T'HH:mm:ss.SSSZZ' OR a java.util.Date instance
-            vcsTag = project.version
-            attributes = ['gradle-plugin': 'no.nils.wsdl2java:no.nils:wsdl2java']
-            //Optional version-level attributes
-        }
-    }
-}
-
 wrapper {
     gradleVersion = '6.0.1'
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "https://nexus.travelcdev.com/repository/maven-releases") {
+                authentication(userName: "admin", password: "travelCompositor123")
+            }
+        }
+    }
 }
 
 build.doLast { uploadArchives }

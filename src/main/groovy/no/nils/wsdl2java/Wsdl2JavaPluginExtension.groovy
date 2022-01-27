@@ -12,6 +12,10 @@ class Wsdl2JavaPluginExtension {
     @PathSensitive(PathSensitivity.ABSOLUTE)
     File wsdlDir = new File(DEFAULT_WSDL_DIR)
 
+
+    @Input
+    String outputDirectory = "build/generated/"
+
     @Input
     List<List<Object>> wsdlsToGenerate
 
@@ -20,6 +24,9 @@ class Wsdl2JavaPluginExtension {
 
     @Input
     String encoding = Charset.defaultCharset().name()
+
+    @Input
+    boolean removeComments = true
 
     @Input
     boolean stabilize = false

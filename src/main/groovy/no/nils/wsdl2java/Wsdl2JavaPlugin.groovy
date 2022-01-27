@@ -26,8 +26,8 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
         // Add new configuration for our plugin and add required dependencies to it later.
         def wsdl2javaConfiguration = project.configurations.maybeCreate(WSDL2JAVA)
 
-        // Get compile configuration and add Java 9+ dependencies if required.
-        project.configurations.named("compile").configure {
+        // Get implementation configuration and add Java 9+ dependencies if required.
+        project.configurations.named("implementation").configure {
             it.withDependencies {
                 if (JavaVersion.current().isJava9Compatible()) {
                     JAVA_9_DEPENDENCIES.each { dep -> it.add(project.dependencies.create(dep)) }
@@ -71,10 +71,6 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
             project.tasks.withType(getTaskClass("org.jetbrains.kotlin.gradle.internal.KaptGenerateStubsTask")).configureEach {
                 it.dependsOn wsdl2JavaTask
             }
-        }
-
-        project.sourceSets {
-            main.java.srcDirs += Wsdl2JavaTask.DESTINATION_DIR
         }
     }
 

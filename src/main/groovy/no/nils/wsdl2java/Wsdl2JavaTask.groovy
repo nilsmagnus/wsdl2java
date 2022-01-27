@@ -1,20 +1,20 @@
 package no.nils.wsdl2java
 
+import com.commentremover.app.CommentProcessor
+import com.commentremover.app.CommentRemover
 import groovy.io.FileType
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.tasks.*
 
+import java.nio.charset.Charset
+import java.nio.file.Files
 import java.security.MessageDigest
 
 @CacheableTask
 class Wsdl2JavaTask extends DefaultTask {
-    static final DESTINATION_DIR = "build/generated/wsdl"
-
     private static final NEWLINE = System.getProperty("line.separator")
 
-    @OutputDirectory
-    File generatedWsdlDir = new File(DESTINATION_DIR)
 
     @InputFiles
     @Classpath
@@ -63,7 +63,9 @@ class Wsdl2JavaTask extends DefaultTask {
                     throw new TaskExecutionException(this, e)
                 }
             }
-
+            if (extension.removeComments) {
+                removeComments(targetDir)
+            }
             copyToOutputDir(targetDir)
         }
     }
@@ -100,7 +102,7 @@ class Wsdl2JavaTask extends DefaultTask {
             packagePaths.add("") // add root if no package paths
         }
 
-        Set<File> packageTargetDirs = packagePaths.collect { subPath -> new File(generatedWsdlDir, subPath) }
+        Set<File> packageTargetDirs = packagePaths.collect { subPath -> new File(new File(extension.outputDirectory), subPath) }
         getLogger().info("Clear target folders {}", packageTargetDirs)
         getProject().delete(packageTargetDirs)
     }
@@ -126,7 +128,7 @@ class Wsdl2JavaTask extends DefaultTask {
 
         srcDir.eachFileRecurse(FileType.FILES) { file ->
             String relPath = file.getAbsolutePath().substring(srcPathLength)
-            File target = new File(generatedWsdlDir, relPath)
+            File target = new File(new File(extension.outputDirectory), relPath)
 
             switchToEncoding(file)
 
@@ -139,7 +141,7 @@ class Wsdl2JavaTask extends DefaultTask {
     }
 
     protected void switchToEncoding(File file) {
-        List<String> lines = file.getText().split(NEWLINE)
+        List<String> lines = Files.readAllLines(file.toPath(), Charset.defaultCharset())
         file.delete()
 
         if (extension.stabilize) {
@@ -147,10 +149,20 @@ class Wsdl2JavaTask extends DefaultTask {
             stabilizeCommentLinks(file, lines)
             stabilizeXmlElementRef(file, lines)
             stabilizeXmlSeeAlso(file, lines)
+            stripFirstLineIfEmpty(lines)
         }
-
-        String text = lines.join(NEWLINE) + NEWLINE  // want empty line last
+        println("First line is: ${lines.get(0)}")
+        String text = lines.join("\n") + "\n"  // want empty line last
         file.withWriter(extension.encoding) { w -> w.write(text) }
+    }
+
+    void stripFirstLineIfEmpty(List<String> lines) {
+        if (lines.get(0) == null || lines.get(0).length() < 2) {
+            println("Removing first line of empty file: ${lines.get(0)}")
+            lines.remove(0)
+        }else{
+            println("Not Removing first line of empty file: ${lines.get(0)}")
+        }
     }
 
     void stripCommentDates(List<String> lines) {
@@ -260,5 +272,18 @@ class Wsdl2JavaTask extends DefaultTask {
 
     private boolean isObjectFactory(File f) {
         return "ObjectFactory.java".equals(f.getName())
+    }
+
+    protected void removeComments(File targetDir) {
+        println("Removing comments on ${targetDir.getAbsolutePath()}")
+        def commentRemover = new CommentRemover.CommentRemoverBuilder()
+                .removeJava(true)
+                .removeSingleLines(true)
+                .removeMultiLines(true)
+                .preserveJavaClassHeaders(false)
+                .preserveCopyRightHeaders(false)
+                .startExternalPath(targetDir.getAbsolutePath())
+                .build()
+        new CommentProcessor(commentRemover).start()
     }
 }
