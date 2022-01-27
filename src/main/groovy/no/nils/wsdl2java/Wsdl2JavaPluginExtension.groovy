@@ -12,6 +12,10 @@ class Wsdl2JavaPluginExtension {
     @PathSensitive(PathSensitivity.ABSOLUTE)
     File wsdlDir = new File(DEFAULT_WSDL_DIR)
 
+
+    @Input
+    String outputDirectory = "build/generated/"
+
     @Input
     List<List<Object>> wsdlsToGenerate
 

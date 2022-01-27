@@ -72,10 +72,6 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
                 it.dependsOn wsdl2JavaTask
             }
         }
-
-        project.sourceSets {
-            main.java.srcDirs += Wsdl2JavaTask.DESTINATION_DIR
-        }
     }
 
     static Class<Task> getTaskClass(name) {
