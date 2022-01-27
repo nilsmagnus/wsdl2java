@@ -22,6 +22,9 @@ class Wsdl2JavaPluginExtension {
     String encoding = Charset.defaultCharset().name()
 
     @Input
+    boolean removeComments = true
+
+    @Input
     boolean stabilize = false
 
     @Input

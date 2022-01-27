@@ -4,8 +4,11 @@ import groovy.io.FileType
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.tasks.*
+import org.gradle.internal.component.external.model.ComponentVariant
 
 import java.security.MessageDigest
+import com.commentremover.app.CommentRemover
+import com.commentremover.app.CommentProcessor
 
 @CacheableTask
 class Wsdl2JavaTask extends DefaultTask {
@@ -63,7 +66,9 @@ class Wsdl2JavaTask extends DefaultTask {
                     throw new TaskExecutionException(this, e)
                 }
             }
-
+            if (extension.removeComments) {
+                removeComments(targetDir)
+            }
             copyToOutputDir(targetDir)
         }
     }
@@ -147,10 +152,17 @@ class Wsdl2JavaTask extends DefaultTask {
             stabilizeCommentLinks(file, lines)
             stabilizeXmlElementRef(file, lines)
             stabilizeXmlSeeAlso(file, lines)
+            stripFirstLineIfEmpty(lines)
         }
 
         String text = lines.join(NEWLINE) + NEWLINE  // want empty line last
         file.withWriter(extension.encoding) { w -> w.write(text) }
+    }
+
+    void stripFirstLineIfEmpty(List<String> lines) {
+        if("".equals(lines.get(0))) {
+            lines.remove(0)
+        }
     }
 
     void stripCommentDates(List<String> lines) {
@@ -260,5 +272,18 @@ class Wsdl2JavaTask extends DefaultTask {
 
     private boolean isObjectFactory(File f) {
         return "ObjectFactory.java".equals(f.getName())
+    }
+
+    protected void removeComments(File targetDir) {
+        println("Removing comments on ${targetDir.getAbsolutePath()}")
+        def commentRemover = new CommentRemover.CommentRemoverBuilder()
+                .removeJava(true)
+                .removeSingleLines(true)
+                .removeMultiLines(true)
+                .preserveJavaClassHeaders(false)
+                .preserveCopyRightHeaders(false)
+                .startExternalPath(targetDir.getAbsolutePath())
+                .build()
+        new CommentProcessor(commentRemover).start()
     }
 }
