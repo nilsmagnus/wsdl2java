@@ -51,8 +51,8 @@ class Wsdl2JavaTask extends DefaultTask {
             String wsdlPath = md5.digest(argsCopy[-1].toString().bytes).encodeHex().toString()
             File targetDir = new File(tmpDir, wsdlPath)
 
-            argsCopy.add(argsCopy.size - 1, '-d')
-            argsCopy.add(argsCopy.size - 1, targetDir)
+            argsCopy.add(argsCopy.size() - 1, '-d')
+            argsCopy.add(argsCopy.size() - 1, targetDir)
             String[] wsdl2JavaArgs = new String[argsCopy.size()]
             for (int i = 0; i < argsCopy.size(); i++)
                 wsdl2JavaArgs[i] = argsCopy[i]
