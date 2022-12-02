@@ -22,6 +22,9 @@ class Wsdl2JavaPluginExtension {
     String encoding = Charset.defaultCharset().name()
 
     @Input
+    LineEnding lineEnding = LineEnding.PLATFORM_NATIVE
+
+    @Input
     boolean stabilize = false
 
     @Input

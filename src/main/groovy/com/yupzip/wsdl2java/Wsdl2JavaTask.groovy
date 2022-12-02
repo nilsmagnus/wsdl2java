@@ -10,8 +10,6 @@ import java.security.MessageDigest
 @CacheableTask
 class Wsdl2JavaTask extends DefaultTask {
 
-    private static final NEWLINE = System.getProperty("line.separator")
-
     @InputFiles
     @Classpath
     Configuration classpath
@@ -144,7 +142,7 @@ class Wsdl2JavaTask extends DefaultTask {
     }
 
     protected void switchToEncoding(File file) {
-        List<String> lines = file.getText().split(NEWLINE)
+        List<String> lines = file.getText().split(LineEnding.PLATFORM_NATIVE.value)
         file.delete()
 
         if (extension.stabilize) {
@@ -154,7 +152,8 @@ class Wsdl2JavaTask extends DefaultTask {
             stabilizeXmlSeeAlso(file, lines)
         }
 
-        String text = lines.join(NEWLINE) + NEWLINE  // want empty line last
+        String extensionLineEnding = extension.lineEnding.value
+        String text = lines.join(extensionLineEnding) + extensionLineEnding  // want empty line last
         file.withWriter(extension.encoding) { w -> w.write(text) }
     }
 
