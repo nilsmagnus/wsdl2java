@@ -142,7 +142,8 @@ class Wsdl2JavaTask extends DefaultTask {
     }
 
     protected void switchToEncoding(File file) {
-        List<String> lines = file.getText().split(LineEnding.PLATFORM_NATIVE.value)
+        String lineEnding = extension.lineEnding.value
+        List<String> lines = file.getText().split(lineEnding)
         file.delete()
 
         if (extension.stabilize) {
@@ -151,9 +152,7 @@ class Wsdl2JavaTask extends DefaultTask {
             stabilizeXmlElementRef(file, lines)
             stabilizeXmlSeeAlso(file, lines)
         }
-
-        String extensionLineEnding = extension.lineEnding.value
-        String text = lines.join(extensionLineEnding) + extensionLineEnding  // want empty line last
+        String text = lines.join(lineEnding) + lineEnding  // want empty line last
         file.withWriter(extension.encoding) { w -> w.write(text) }
     }
 
