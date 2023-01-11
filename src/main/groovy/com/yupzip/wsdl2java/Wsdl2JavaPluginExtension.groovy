@@ -31,10 +31,10 @@ class Wsdl2JavaPluginExtension {
     boolean stabilizeAndMergeObjectFactory = false
 
     @Input
-    String cxfVersion = "+"
+    String cxfVersion = null
 
     @Input
-    String cxfPluginVersion = "+"
+    String cxfPluginVersion = null
 
     @Input
     String generatedWsdlDir = "build/generated/wsdl"

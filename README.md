@@ -62,8 +62,8 @@ plugins {
 | locale | Locale.getDefault() | The locale for the generated sources – especially the JavaDoc. This might be necessary to prevent differing sources due to several development environments. |
 | encoding | platform default encoding | Set the encoding name for generated sources, such as EUC-JP or UTF-8. |
 | stabilizeAndMergeObjectFactory| false | If multiple WSDLs target the same package, merge their `ObjectFactory` classes. |
-| cxfVersion | "+" | Controls the CXF version used to generate code. |
-| cxfPluginVersion | "+" | Controls the CXF XJC-plugins version used to generate code. |
+| cxfVersion | none, has to be specified | Controls the CXF version used to generate code. |
+| cxfPluginVersion | none, has to be specified | Controls the CXF XJC-plugins version used to generate code. |
 | includeJava8XmlDependencies | true | If on Java 9 or later this flag includes xml libraries that were previously included with the JRE. Set to false if you use recent versions of Java and the Jakarta xml implementations. |
 
 Example setting of options:
