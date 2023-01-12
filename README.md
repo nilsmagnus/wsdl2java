@@ -1,6 +1,7 @@
 ### Note
 
-This plugin is forked from deprecated nilsmagnus/wsdl2java. Version 2.3.2 only includes a small update to make the plugin compatible with Gradle 7+. 
+* Version 3.0.0 contains a breaking change: 'cxfVersion' and 'cxfPluginVersion' properties are now required.
+* This plugin is forked from deprecated nilsmagnus/wsdl2java to make the plugin compatible with Gradle 7+. 
 
 wsdl2java gradle plugin
 =========
@@ -18,6 +19,7 @@ Contributions are welcome as long as they are sane.
 
 ### CXF
 This plugin uses the apache-cxf tools to do the actual work.
+(Version must be defined in gradle task config!)
 
 ### Tasks
 
@@ -38,8 +40,8 @@ Groovy:
 
 ```groovy
 plugins {
-  id 'java'
-  classpath 'com.yupzip:wsdl2java:2.3.2'
+    id 'java'
+    id 'com.yupzip.wsdl2java' version '3.0.0'
 }
 ```
 
@@ -48,7 +50,7 @@ Kotlin:
 ```kotlin
 plugins {
     id("java")
-    id("com.yupzip.wsdl2java") version "2.3.2"
+    id("com.yupzip.wsdl2java") version "3.0.0"
 }
 ```
 
@@ -78,16 +80,16 @@ wsdl2java {
             ['-xjc','-b','bindingfile.xml','src/main/resources/wsdl/secondwsdl.wsdl']
     ]
     locale = Locale.GERMANY
-    cxfVersion = "2.5.1"
-    cxfPluginVersion = "2.4.0"
+    cxfVersion = "4.0.0"
+    cxfPluginVersion = "4.0.0"
 }
 ```
     
 Kotlin:
 
 ```kotlin
-extra["cxfVersion"] = "3.3.2"
-extra["cxfPluginVersion"] = "3.2.2"
+extra["cxfVersion"] = "4.0.0"
+extra["cxfPluginVersion"] = "4.0.0"
 
 wsdl2java {
     wsdlDir = file("$projectDir/src/main/wsdl")
@@ -98,53 +100,98 @@ wsdl2java {
 }
 ```
 
-### Options for xsd2java (deprecated, separate plugin coming soon)
-
-This will not work for version 0.8+!
-
-| Option | Default value | Description |
-| ------ | ------------- | ----------- |
-| generatedXsdDir | "generatedsources/src/main/java" | Destination directory for generated sources |
-| xsdsToGenerate | null | 2-d array consisting of 2 or 3 values in each array: 1. xsd-file(input), 2. package for the generated sources, 3. (optional) a map containing additional options for the xjc task |
-| encoding | platform default encoding | Set the encoding name for generated sources, such as EUC-JP or UTF-8. |
-
-Example setting of options:
-
-```groovy
-xsd2java {
-    encoding = 'utf-8'
-    xsdsToGenerate = [
-        ["src/main/resources/xsd/CustomersAndOrders.xsd", 'com.yupzip.xsd2java.sample', [header: false] /* optional map */]
-    ]
-    generatedXsdDir = file("generatedsources/xsd2java")
-}
-```
-
-## Complete example usage
-This is a an example of a working build.gradle for a java project. You can also take a look at the test resources, which contain two working projects.
-
+## Example gradle configuration for Spring Boot 3+ with jakarta namespace
 ```groovy
 plugins {
-  id 'java'
-  classpath 'com.yupzip:wsdl2java:2.3.2'
+    id "java"
+    id "org.springframework.boot" version "3.0.1"
+    id "io.spring.dependency-management" version "1.1.0"
+    id "com.yupzip.wsdl2java" version "3.0.0"
 }
 
-repositories {
-    mavenCentral()
+bootJar {
+    duplicatesStrategy(DuplicatesStrategy.WARN)
+}
+
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+    options.compilerArgs << '-parameters'
+}
+
+sourceSets.main.java.srcDirs "src/generated-sources/java"
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web-services'
+    implementation 'org.springframework.ws:spring-ws-support:4.0.0'
+    // your project dependencies
+
+    implementation 'com.sun.xml.bind:jaxb-impl:4.0.1'
+    implementation 'com.sun.xml.messaging.saaj:saaj-impl:3.0.0'
+    implementation 'com.sun.xml.ws:jaxws-ri:4.0.0'
+    
+    implementation 'io.swagger.core.v3:swagger-jaxrs2-jakarta:2.2.7'
+    
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+    implementation 'jakarta.xml.soap:jakarta.xml.soap-api:3.0.0'
+    implementation 'jakarta.xml.ws:jakarta.xml.ws-api:4.0.0'
+    
+    implementation 'org.jvnet.jaxb2_commons:jaxb2-namespace-prefix:2.0'
+    implementation 'codes.rafael.jaxb2_commons:jaxb2-basics:3.0.0'
+    implementation 'codes.rafael.jaxb2_commons:jaxb2-basics-runtime:3.0.0'
+    
+    implementation 'org.apache.cxf.xjc-utils:cxf-xjc-runtime:4.0.0'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:4.0.1'
+}
+
+configurations {
+    wsdl2java
 }
 
 dependencies {
-    testCompile 'junit:junit:+'
+        wsdl2java (
+        'com.sun.xml.bind:jaxb-impl:4.0.1',
+        'org.apache.cxf.xjc-utils:cxf-xjc-runtime:4.0.0',
+        'jakarta.xml.ws:jakarta.xml.ws-api:4.0.0',
+        'com.sun.xml.ws:rt:4.0.0',
+        'org.jvnet.jaxb2_commons:jaxb2-namespace-prefix:2.0',
+        'codes.rafael.jaxb2_commons:jaxb2-basics-runtime:3.0.0',
+        'codes.rafael.jaxb2_commons:jaxb2-basics:3.0.0'
+    )
 }
 
 wsdl2java {
+    wsdlDir = file("$projectDir/src/main/resources/wsdl/")
+    stabilizeAndMergeObjectFactory = true
+    includeJava8XmlDependencies = false
+    cxfVersion = "4.0.0"
+    cxfPluginVersion = "4.0.0"
     wsdlsToGenerate = [
-            ['-p', 'com.acme.mypackage', '-autoNameResolution', "$projectDir/src/main/resources/wsdl/stockqoute.wsdl"]
+            ['-xjc',
+             '-xjc-Xnamespace-prefix',
+             '-b',"$projectDir/src/main/resources/wsdl/wsdlBindings.xml",
+             '-b',"$projectDir/src/main/resources/wsdl/wsdlTypeDefBindings.xjb",
+             '-wsdlLocation', 'classPath:wsdl/myWsdl.wsdl',
+             '-p', 'my.package',
+             '-autoNameResolution',
+             '-verbose',
+             "$projectDir/src/main/resources/wsdl/WsgServiceOrderService.wsdl"
+            ],
+            ['-xjc',
+             '-xjc-Xnamespace-prefix',
+             '-b',"$projectDir/src/main/resources/wsdl/wsdlBindings2.xml",
+             '-b',"$projectDir/src/main/resources/wsdl/wsdlTypeDefBindings2.xjb",
+             '-wsdlLocation', 'classPath:wsdl/myWsdl2.wsdl',
+             '-p', 'my.package',
+             '-autoNameResolution',
+             '-verbose',
+             "$projectDir/src/main/resources/wsdl/myWsdl2.wsdl"]
     ]
-    wsdlDir = file("$projectDir/src/main/resources/wsdl")
-    locale = Locale.FRANCE
-    cxfVersion = "2.5.1"
-    cxfPluginVersion = "2.4.0"
+    generatedWsdlDir = file("src/generated-sources/java")
 }
 ```
 
@@ -183,7 +230,7 @@ wsdl2java{
 }
 ```
 
-This example creates the hashCode and the equals method.
+This example creates hashCode and equals methods.
 
 ### A notice on multi-module projects
 
