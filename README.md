@@ -179,7 +179,7 @@ wsdl2java {
              '-p', 'my.package',
              '-autoNameResolution',
              '-verbose',
-             "$projectDir/src/main/resources/wsdl/WsgServiceOrderService.wsdl"
+             "$projectDir/src/main/resources/wsdl/myWsdl.wsdl"
             ],
             ['-xjc',
              '-xjc-Xnamespace-prefix',
