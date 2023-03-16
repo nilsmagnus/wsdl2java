@@ -1,4 +1,4 @@
-package no.nils.wsdl2java
+package com.yupzip.wsdl2java
 
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
@@ -7,6 +7,7 @@ import org.gradle.api.Task
 
 class Wsdl2JavaPlugin implements Plugin<Project> {
     public static final String WSDL2JAVA = "wsdl2java"
+    public static final String WSDL2JAVA_TASK = "wsdl2javaTask"
 
     private static final JAVA_9_DEPENDENCIES = [
             "javax.xml.bind:jaxb-api:2.3.1",
@@ -26,16 +27,16 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
         // Add new configuration for our plugin and add required dependencies to it later.
         def wsdl2javaConfiguration = project.configurations.maybeCreate(WSDL2JAVA)
 
-        // Get compile configuration and add Java 9+ dependencies if required.
-        project.configurations.named("compile").configure {
+        // Get implementation configuration and add Java 9+ dependencies if required.
+        project.configurations.named("implementation").configure {
             it.withDependencies {
-                if (JavaVersion.current().isJava9Compatible()) {
+                if (JavaVersion.current().isJava9Compatible() && extension.includeJava8XmlDependencies) {
                     JAVA_9_DEPENDENCIES.each { dep -> it.add(project.dependencies.create(dep)) }
                 }
             }
         }
 
-        def wsdl2JavaTask = project.tasks.register(WSDL2JAVA, Wsdl2JavaTask.class) { task ->
+        def wsdl2JavaTask = project.tasks.register(WSDL2JAVA_TASK, Wsdl2JavaTask.class) { task ->
             wsdl2javaConfiguration.withDependencies {
                 it.add(project.dependencies.create("org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:${cxfVersion.get()}"))
                 it.add(project.dependencies.create("org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:${cxfVersion.get()}"))
@@ -46,7 +47,7 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
                     it.add(project.dependencies.create("org.apache.cxf.xjcplugins:cxf-xjc-boolean:${cxfPluginVersion.get()}"))
                 }
 
-                if (JavaVersion.current().isJava9Compatible()) {
+                if (JavaVersion.current().isJava9Compatible() && extension.includeJava8XmlDependencies) {
                     JAVA_9_DEPENDENCIES.each { dep -> it.add(project.dependencies.create(dep)) }
                 }
             }
@@ -61,24 +62,14 @@ class Wsdl2JavaPlugin implements Plugin<Project> {
             it.dependsOn wsdl2JavaTask
         }
 
-        project.pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
-            project.tasks.withType(getTaskClass("org.jetbrains.kotlin.gradle.tasks.KotlinCompile")).configureEach {
-                it.dependsOn wsdl2JavaTask
-            }
-        }
-
-        project.pluginManager.withPlugin("org.jetbrains.kotlin.kapt") {
-            project.tasks.withType(getTaskClass("org.jetbrains.kotlin.gradle.internal.KaptGenerateStubsTask")).configureEach {
+        if (project.tasks.findByName("compileKotlin") != null) {
+            project.tasks.named("compileKotlin").configure {
                 it.dependsOn wsdl2JavaTask
             }
         }
 
         project.sourceSets {
-            main.java.srcDirs += Wsdl2JavaTask.DESTINATION_DIR
+            main.java.srcDirs += extension.generatedWsdlDir
         }
-    }
-
-    static Class<Task> getTaskClass(name) {
-        return Class.forName(name) as Class<Task>
     }
 }

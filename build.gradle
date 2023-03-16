@@ -2,20 +2,20 @@ plugins {
     id "groovy"
     id "maven-publish"
     id "java-gradle-plugin"
-    id "com.jfrog.bintray" version "1.8.4"
+    id 'com.gradle.plugin-publish' version '0.14.0'
     id 'idea'
     id 'eclipse'
 }
 
-group = 'no.nils'
-version = '0.13-SNAPSHOT'
+group = 'com.yupzip'
+version = '3.0.0'
 
 // stay compatible with the crowd
 sourceCompatibility = JavaVersion.VERSION_1_6
 targetCompatibility = JavaVersion.VERSION_1_6
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -41,48 +41,24 @@ test {
 gradlePlugin {
     plugins {
         wsdl2java {
-            id = 'no.nils.wsdl2java'
-            implementationClass = 'no.nils.wsdl2java.Wsdl2JavaPlugin'
+            id = 'com.yupzip.wsdl2java'
+            implementationClass = 'com.yupzip.wsdl2java.Wsdl2JavaPlugin'
+            displayName = 'com.yupzip.wsdl2java'
+            description = 'Generate java code form wsdl/xsd with cxf'
         }
     }
+}
+
+pluginBundle {
+    website = 'https://github.com/yupzip/wsdl2java'
+    vcsUrl = 'https://github.com/yupzip/wsdl2java'
+    tags = ['wsdl2java']
 }
 
 publishing {
     publications {
         maven(MavenPublication) {
             from components.java
-        }
-    }
-}
-
-bintray {
-    apiUrl = "https://api.bintray.com"
-    user = System.env.BINTRAY_USER
-    key = System.env.BINTRAY_API_KEY
-
-    publications = ['maven'] //When uploading Maven-based publication files
-    // - AND/OR -
-    dryRun = false //Whether to run this as dry-run, without deploying
-    publish = true //If version should be auto published after an upload
-    pkg {
-        repo = 'maven'
-        //userOrg = 'no.nils' //An optional organization name when the repo belongs to one of the user's orgs
-        name = 'wsdl2java'
-        desc = 'Gradle wsdl2java plugin'
-        websiteUrl = 'https://github.com/nilsmagnus/wsdl2java'
-        issueTrackerUrl = 'https://github.com/nilsmagnus/wsdl2java/issues'
-        vcsUrl = 'https://github.com/nilsmagnus/wsdl2java.git'
-        licenses = ['MIT']
-        labels = ['gradle', 'wsdl2java', 'plugin']
-        publicDownloadNumbers = true
-        //Optional version descriptor
-        version {
-            name = project.version //Bintray logical version name
-            desc = ''
-            //released  = '' //2 possible values: date in the format of 'yyyy-MM-dd'T'HH:mm:ss.SSSZZ' OR a java.util.Date instance
-            vcsTag = project.version
-            attributes = ['gradle-plugin': 'no.nils.wsdl2java:no.nils:wsdl2java']
-            //Optional version-level attributes
         }
     }
 }

@@ -1,4 +1,4 @@
-package no.nils.wsdl2java
+package com.yupzip.wsdl2java
 
 import groovy.io.FileType
 import org.gradle.api.DefaultTask
@@ -9,12 +9,6 @@ import java.security.MessageDigest
 
 @CacheableTask
 class Wsdl2JavaTask extends DefaultTask {
-    static final DESTINATION_DIR = "build/generated/wsdl"
-
-    private static final NEWLINE = System.getProperty("line.separator")
-
-    @OutputDirectory
-    File generatedWsdlDir = new File(DESTINATION_DIR)
 
     @InputFiles
     @Classpath
@@ -26,8 +20,17 @@ class Wsdl2JavaTask extends DefaultTask {
     @Nested
     Wsdl2JavaPluginExtension extension
 
+    @Internal
+    File generatedWsdlDir
+
+    @OutputDirectory
+    File getGeneratedWsdlFile() {
+        return new File(extension != null ? extension.generatedWsdlDir : "build/generated/wsdl")
+    }
+
     @TaskAction
     def wsdl2java() {
+        generatedWsdlDir = getGeneratedWsdlFile()
         deleteOutputFolders()
         MessageDigest md5 = MessageDigest.getInstance("MD5")
 
@@ -46,8 +49,8 @@ class Wsdl2JavaTask extends DefaultTask {
             String wsdlPath = md5.digest(argsCopy[-1].toString().bytes).encodeHex().toString()
             File targetDir = new File(tmpDir, wsdlPath)
 
-            argsCopy.add(argsCopy.size - 1, '-d')
-            argsCopy.add(argsCopy.size - 1, targetDir)
+            argsCopy.add(argsCopy.size() - 1, '-d')
+            argsCopy.add(argsCopy.size() - 1, targetDir)
             String[] wsdl2JavaArgs = new String[argsCopy.size()]
             for (int i = 0; i < argsCopy.size(); i++)
                 wsdl2JavaArgs[i] = argsCopy[i]
@@ -139,7 +142,8 @@ class Wsdl2JavaTask extends DefaultTask {
     }
 
     protected void switchToEncoding(File file) {
-        List<String> lines = file.getText().split(NEWLINE)
+        String lineEnding = extension.lineEnding.value
+        List<String> lines = file.getText().split(lineEnding)
         file.delete()
 
         if (extension.stabilize) {
@@ -148,8 +152,7 @@ class Wsdl2JavaTask extends DefaultTask {
             stabilizeXmlElementRef(file, lines)
             stabilizeXmlSeeAlso(file, lines)
         }
-
-        String text = lines.join(NEWLINE) + NEWLINE  // want empty line last
+        String text = lines.join(lineEnding) + lineEnding  // want empty line last
         file.withWriter(extension.encoding) { w -> w.write(text) }
     }
 

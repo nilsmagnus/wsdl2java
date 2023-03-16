@@ -1,4 +1,4 @@
-package no.nils.wsdl2java
+package com.yupzip.wsdl2java
 
 import org.gradle.api.tasks.*
 
@@ -22,15 +22,24 @@ class Wsdl2JavaPluginExtension {
     String encoding = Charset.defaultCharset().name()
 
     @Input
+    LineEnding lineEnding = LineEnding.PLATFORM_NATIVE
+
+    @Input
     boolean stabilize = false
 
     @Input
     boolean stabilizeAndMergeObjectFactory = false
 
     @Input
-    String cxfVersion = "+"
+    String cxfVersion = null
 
     @Input
-    String cxfPluginVersion = "+"
+    String cxfPluginVersion = null
+
+    @Input
+    String generatedWsdlDir = "build/generated/wsdl"
+
+    @Input
+    boolean includeJava8XmlDependencies = true;
 
 }
